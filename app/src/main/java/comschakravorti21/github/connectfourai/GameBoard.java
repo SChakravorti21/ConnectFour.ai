@@ -90,6 +90,15 @@ public class GameBoard {
 
         return false;
     }
+
+    public void resetBoard() {
+        for(int i = 0; i < ROWS; i++) {
+            for(int j = 0; j < COLUMNS; j++) {
+                gameState[i][j] = 0;
+                buttons[i][j].setImageResource(R.mipmap.piece_empty);
+            }
+        }
+    }
     
 
 }

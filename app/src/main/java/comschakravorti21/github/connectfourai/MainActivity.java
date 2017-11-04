@@ -2,10 +2,14 @@ package comschakravorti21.github.connectfourai;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,10 +17,32 @@ public class MainActivity extends AppCompatActivity {
     public static final int PLAYER_2 = 1;
     public static final int CPU = 3;
 
+    private Toolbar toolbar;
     private GridLayout gridBoard;
     private int[][] pieces;
     private int player;
     public GameBoard gameboard;
+    private int scoreP1, scoreP2;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_reset:
+                gameboard.resetBoard();
+                TextView scoreView1 = (TextView)findViewById(R.id.score_P1);
+                scoreView1.setText("0");
+                TextView scoreView2 = (TextView)findViewById(R.id.score_P2);
+                scoreView2.setText("0");
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         gridBoard = (GridLayout)findViewById(R.id.board);
         pieces = new int[GameBoard.ROWS][GameBoard.COLUMNS];
         player = PLAYER_1;
+        scoreP1 = scoreP2 = 0;
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         gameboard = new GameBoard();
 
@@ -44,6 +74,17 @@ public class MainActivity extends AppCompatActivity {
 
                         if(gameboard.checkWin(i, col, player)) {
                             Log.d("Check Win", "TRUE");
+                            if(player == PLAYER_1) {
+                                scoreP1++;
+                                TextView scoreView = (TextView)findViewById(R.id.score_P1);
+                                scoreView.setText("" + scoreP1);
+                            } else {
+                                scoreP2++;
+                                TextView scoreView = (TextView)findViewById(R.id.score_P2);
+                                scoreView.setText("" + scoreP2);
+                            }
+
+                            gameboard.resetBoard();
                         } else{
                             Log.d("Check Win", "FALSE");
                         }
