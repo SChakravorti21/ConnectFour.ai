@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private GridLayout gridBoard;
-    private byte[][] pieces;
+    //private short[] pieces;
+    //private byte[][] pieces;
     private byte player;
     public GameBoard gameboard;
     private int scoreP1, scoreP2;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gridBoard = (GridLayout)findViewById(R.id.board);
-        pieces = new byte[GameBoard.ROWS][GameBoard.COLUMNS];
+        //pieces = new short[GameBoard.ROWS];
         player = PLAYER_1;
         scoreP1 = scoreP2 = 0;
 
@@ -70,8 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 int col = Character.digit( ((String)button.getTag() ).charAt(1), 10) - 1;
 
                 //Start from bottom when searching where to insert piece
-                for(int i = pieces.length - 1; i >= 0; i--) {
+                for(int i = GameBoard.ROWS - 1; i >= 0; i--) {
                     //Place the piece if its empty
+                    Log.d("Element", "" + gameboard.getElement(i, col));
+
                     if(gameboard.getElement(i, col) == 0) {
 
                         gameboard.placePiece(i, col, player);

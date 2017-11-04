@@ -10,10 +10,10 @@ public class CPU_Player {
 
     public MiniMaxNode root;
     private int difficulty;
-    private byte[][] gameState;
+    private short[] gameState;
     private final int DEPTH = 6;
 
-    public CPU_Player(byte[][] gameS){
+    public CPU_Player(short[] gameS){
         this.root = new MiniMaxNode();
         this.gameState = gameS;
     }
@@ -47,8 +47,14 @@ public class CPU_Player {
         }
     }
     private int returnRowIfPlaced(int col){
+        short c = (short)(GameBoard.COLUMNS - col);
+        short zero = (short)0b11;
+
         for(int i = GameBoard.ROWS- 1; i >= 0; i--) {
-            if(gameState[i][col] == 0){
+
+            short data = gameState[i];
+
+            if( ((data >> c) & zero) == 0){
                 return i;
             }
         }
@@ -64,7 +70,7 @@ public class CPU_Player {
 
     //This set method works with the following method instrction .Basicaly, we pass in a game
     //state and then the class variable game state gets updated!!!!!!!!!!
-    public void setGameState(byte[][] gs){
+    public void setGameState(short[] gs){
         this.gameState = gs;
     }
 
