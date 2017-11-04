@@ -1,5 +1,7 @@
 package comschakravorti21.github.connectfourai;
 
+import android.util.Log;
+
 /**
  * Created by Athu on 11/4/2017.
  */
@@ -36,6 +38,7 @@ public class CPU_Player {
                 int r = rowIfPlaced(c);
 
                 MiniMaxNode n = new MiniMaxNode(gameState, r, c, playerNum, node.getStaticValue());
+                Log.d("Static eval", "CALLED");
                 n.setGameState(r, c, playerNum);
                 node.addChild(n);
                 //Log.d("current depth",  " " + currentDepth );

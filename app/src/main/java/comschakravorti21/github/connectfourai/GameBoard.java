@@ -6,6 +6,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import java.util.Arrays;
+
 /**
  * Created by Athu on 11/3/2017.
  */
@@ -171,21 +173,20 @@ public class GameBoard {
         int index = 3, r = lastMoveRow, c = lastMoveCol;
         short[] players = new short[7];
         short[] empties = new short[7];
-        for (int i = 0; i < dx.length/2 && i < dy.length/2; i++) {
+        for (int i = 0; i < dx.length / 2 && i < dy.length / 2; i++) {
 
             int x = dx[i];
             int y = dy[i];
 
-            for(int j = 0; j < 4 && r < ROWS && r >= 0 && c < COLUMNS && c >= 0; j++) {
+            for (int j = 0; j < 4 && r < ROWS && r >= 0 && c < COLUMNS && c >= 0; j++) {
 
                 short data = gameState[r];
-                short shift = (short)((GameBoard.COLUMNS - c - 1)*2);
+                short shift = (short) ((GameBoard.COLUMNS - c - 1) * 2);
                 //Modify data to reflect the piece at the position
-                data = (short)(data >> shift & 0b11);
+                data = (short) (data >> shift & 0b11);
 
-                if(data == bitPlayer) {
-                    players[index] = bitPlayer;
-                }
+                players[index] = data;
+
 
                 r += y;
                 c += x;
@@ -195,16 +196,14 @@ public class GameBoard {
             r = lastMoveRow - y;
             c = lastMoveCol - x;
             index = 2;
-            for(int j = 0; j < 3 && r < ROWS && r >= 0 && c < COLUMNS && c >= 0 ; j++) {
+            for (int j = 0; j < 3 && r < ROWS && r >= 0 && c < COLUMNS && c >= 0; j++) {
 
                 short data = gameState[r];
-                short shift = (short)((GameBoard.COLUMNS - c - 1)*2);
+                short shift = (short) ((GameBoard.COLUMNS - c - 1) * 2);
                 //Modify data to reflect the piece at the position
-                data = (short)(data >> shift & 0b11);
+                data = (short) (data >> shift & 0b11);
 
-                if(data == bitPlayer) {
-                    players[index] = bitPlayer;
-                }
+                players[index] = data;
 
                 r -= y;
                 c -= x;
@@ -214,33 +213,41 @@ public class GameBoard {
             //EXTRACT INTO SEPARATE METHOD FOR READABILITY
             //Now traverse the "players" array to find the possibilities
             index = 0;
-            r = lastMoveRow - y*3;
-            c = lastMoveCol - x*3;
+            r = lastMoveRow - y * 3;
+            c = lastMoveCol - x * 3;
 
-            //MINIMIZE
-            if(player == PLAYER1_BIT) {
-                for (int j = 0; j < players.length; j++) {
-                    if (players[j] == 0) {
-                        empties[j] = 1;
-                    }
-
-                    index++;
-                    r += y;
-                    c += x;
+            for (int j = 0; j < players.length; j++) {
+                if (players[j] == 0 && CPU_Player.rowIfPlaced(c, gameState) == r) {
+                    empties[j] = bitPlayer;
                 }
 
-
+                index++;
+                r += y;
+                c += x;
             }
 
-            //MAXIMIZE
-            else {
+            int numInRow = 0;
+            for (int j = 0; j < empties.length; j++) {
+                if (empties[j] == bitPlayer) {
+                    players[j] = bitPlayer;
 
+                    for (int k = 0; k < players.length; k++) {
+                        if (players[k] == bitPlayer && numInRow < 4) {
+                            numInRow++;
+                        } else {
+                            int toAdd = (numInRow >= 3) ? (int) Math.pow(numInRow, 3) : 0;
+                            ret += (bitPlayer == PLAYER1_BIT) ? -toAdd : toAdd;
+                            numInRow = 0;
+                        }
+                    }
+
+                    players[j] = 0;
+                }
             }
-
-
 
             //Reset index values
-            players = new short[7];
+            Arrays.fill(players, (short) 0);
+            Arrays.fill(empties, (short) 0);
             index = 3;
             r = lastMoveRow;
             c = lastMoveCol;
