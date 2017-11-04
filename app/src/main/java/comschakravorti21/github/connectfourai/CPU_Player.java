@@ -31,24 +31,25 @@ public class CPU_Player {
         short[] gameState = node.getGamestate();
 
         for(int c = 0; c < GameBoard.COLUMNS; c++){
-//            if(gameState[0][c] == 0){
-//
-//                int r = returnRowIfPlaced(c);
-//
-//                MiniMaxNode n = new MiniMaxNode(gameState, r, c, playerNum);
-//                n.setGameState(r, c, playerNum);
-//                node.addChild(n);
-//                //Log.d("current dept",  " " + currentDepth );
-//
-//                if(currentDepth < DEPTH){
-//                    initTree(n, (byte)(-1 *playerNum), currentDepth + 1);
-//                }
-//            }
+            int value = GameBoard.getElement(0, c, gameState);
+            if(value == 0){
+
+                int r = returnRowIfPlaced(c);
+
+                MiniMaxNode n = new MiniMaxNode(gameState, r, c, playerNum);
+                n.setGameState(r, c, playerNum);
+                node.addChild(n);
+                //Log.d("current dept",  " " + currentDepth );
+
+                if(currentDepth < DEPTH){
+                    initTree(n, (byte)(-1 *playerNum), currentDepth + 1);
+                }
+            }
         }
     }
     private int returnRowIfPlaced(int col){
-        short c = (short)(GameBoard.COLUMNS - col);
-        short zero = (short)0b11;
+        short c = (short)(GameBoard.COLUMNS - col - 1);
+        short zero = 0b11;
 
         for(int i = GameBoard.ROWS- 1; i >= 0; i--) {
 
