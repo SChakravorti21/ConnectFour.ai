@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ImageButton button = (ImageButton)view;
+
                 int col = Character.digit( ((String)button.getTag() ).charAt(1), 10) - 1;
 
                 //Start from bottom when searching where to insert piece
