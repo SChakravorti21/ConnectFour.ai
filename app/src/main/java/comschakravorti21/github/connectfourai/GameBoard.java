@@ -32,14 +32,7 @@ public class GameBoard {
     //@param playerNum, 1 if player 1,     -1 if player 2
     public int placePiece(int row, int col, int playerNum) {
         //gameState[row][col] = playerNum;
-        short data = gameState[row];
-        //Create the player position and shift it by the necessary number of columns
-        //00 is empty, 01 is player 1, 10 is player 2
-        short bitPlayer = (playerNum == -1) ? (short)(PLAYER1_BIT << (short)((COLUMNS - col - 1)*2)): (short)(PLAYER2_BIT << (short)((COLUMNS - col - 1)*2));
-
-        //Use OR operator to insert piece, then reset piece in array
-        short newRow = (short)(data | bitPlayer);
-        gameState[row] = newRow;
+        placePiece(row, col, gameState, (playerNum == -1) ? PLAYER1_BIT : PLAYER2_BIT);
 
         if(playerNum == MainActivity.PLAYER_1) {
             this.changePieceColor(row, col, R.mipmap.piece_yellow);
@@ -49,6 +42,19 @@ public class GameBoard {
 
         return row;
     }
+
+    public static void placePiece(int row, int col, short[] gameState, short playerNum) {
+        short data = gameState[row];
+        //Create the player position and shift it by the necessary number of columns
+        //00 is empty, 01 is player 1, 10 is player 2
+        short bitPlayer = (playerNum == PLAYER1_BIT) ? (short)(PLAYER1_BIT << (short)((COLUMNS - col - 1)*2))
+                : (short)(PLAYER2_BIT << (short)((COLUMNS - col - 1)*2));
+
+        //Use OR operator to insert piece, then reset piece in array
+        short newRow = (short)(data | bitPlayer);
+        gameState[row] = newRow;
+    }
+
 
     public void setButtonImg(int row, int col, ImageButton button){
         buttons[row][col] = button;

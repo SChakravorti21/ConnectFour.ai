@@ -28,22 +28,22 @@ public class CPU_Player {
     public void initTree(MiniMaxNode node, byte playerNum, int currentDepth){
         //for loop find empty col, make nodes fo each empty column
 
-        byte[][] gameState = node.getGamestate();
+        short[] gameState = node.getGamestate();
 
         for(int c = 0; c < GameBoard.COLUMNS; c++){
-            if(gameState[0][c] == 0 ){
-
-                int r = returnRowIfPlaced(c);
-
-                MiniMaxNode n = new MiniMaxNode(gameState, r, c, playerNum);
-                n.setGameState(r, c, playerNum);
-                node.addChild(n);
-                //Log.d("current dept",  " " + currentDepth );
-
-                if(currentDepth < DEPTH){
-                    initTree(n, (byte)(-1 *playerNum), currentDepth + 1);
-                }
-            }
+//            if(gameState[0][c] == 0){
+//
+//                int r = returnRowIfPlaced(c);
+//
+//                MiniMaxNode n = new MiniMaxNode(gameState, r, c, playerNum);
+//                n.setGameState(r, c, playerNum);
+//                node.addChild(n);
+//                //Log.d("current dept",  " " + currentDepth );
+//
+//                if(currentDepth < DEPTH){
+//                    initTree(n, (byte)(-1 *playerNum), currentDepth + 1);
+//                }
+//            }
         }
     }
     private int returnRowIfPlaced(int col){

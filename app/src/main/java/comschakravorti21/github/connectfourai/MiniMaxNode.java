@@ -9,36 +9,36 @@ import java.util.ArrayList;
 public class MiniMaxNode {
 
     private ArrayList<MiniMaxNode> children;
-    private byte[][] gamestate;
+    private short[] gamestate;
     private int staticValue;
     private boolean isMax;
 
     public MiniMaxNode(){
         children = new ArrayList<>(7);
-        gamestate = new byte[6][7];
+        gamestate = new short[6];
     }
 
-    public MiniMaxNode(byte[][] prevGameState){
+    public MiniMaxNode(short[] prevGameState){
         this.gamestate = prevGameState;
         children = new ArrayList<>(7);
     }
 
-    public MiniMaxNode(byte[][] prevGameState, int r, int c, byte currentPlayerNum){
+    public MiniMaxNode(short[] prevGameState, int r, int c, byte currentPlayerNum){
         this.gamestate = prevGameState;
-        gamestate[r][c] = currentPlayerNum;
-        children = new ArrayList<>(7);
+        GameBoard.placePiece(r, c, gamestate, currentPlayerNum);
 
+        children = new ArrayList<>(7);
     }
 
     public void addChild(MiniMaxNode node){
         children.add(node);
     }
 
-    public byte[][] getGamestate() {
+    public short[] getGamestate() {
         return gamestate;
     }
 
     public void setGameState(int r, int c, byte playerNum) {
-        gamestate[r][c] = playerNum;
+        GameBoard.placePiece(r, c, gamestate, playerNum);
     }
 }

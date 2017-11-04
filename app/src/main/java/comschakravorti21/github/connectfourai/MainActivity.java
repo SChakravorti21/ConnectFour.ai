@@ -31,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.action_reset:
                 gameboard.resetBoard();
+                scoreP1 = 0;
                 TextView scoreView1 = (TextView)findViewById(R.id.score_P1);
                 scoreView1.setText("0");
+                scoreP2 = 0;
                 TextView scoreView2 = (TextView)findViewById(R.id.score_P2);
                 scoreView2.setText("0");
         }
