@@ -1,6 +1,7 @@
 package comschakravorti21.github.connectfourai;
 
 import android.media.Image;
+import android.util.Log;
 import android.widget.ImageButton;
 
 /**
@@ -11,6 +12,9 @@ public class GameBoard {
 
     public static final int ROWS = 6;
     public static final int COLUMNS = 7;
+    public static final int[] dx = {0, 1, 1, 1, 0, -1, -1, -1};
+    public static final int[] dy = {-1, -1, 0, 1, 1, 1, 0, -1};
+
     private int[][] gameState;
     private ImageButton[][] buttons;
     //0 = empty, 1 = blue, 2 = red
@@ -53,6 +57,39 @@ public class GameBoard {
         return gameState[row][col];
     }
 
+    public boolean checkWin(int row, int col, int player) {
+        for(int i = 0, r = row, c = col ; i < dx.length/2 && i < dy.length/2;
+                i++, r = row, c = col) {
+
+            int x = dx[i];
+            int y = dy[i];
+
+            int count = 0;
+            while(r < ROWS && r >= 0 && c < COLUMNS && c >= 0
+                    && count < 4 && gameState[r][c] == player) {
+                count++;
+                //Log.d("COUNT, LOOP 1", "" + count);
+                r += y;
+                c += x;
+            }
+
+            r = row - y;
+            c = col - x;
+            while(r < ROWS && r >= 0 && c < COLUMNS && c >= 0
+                    && count < 4 && gameState[r][c] == player) {
+
+                count++;
+                //Log.d("COUNT, LOOP 2", "" + count);
+                r -= y;
+                c -= x;
+            }
+
+            if(count == 4)
+                return true;
+        }
+
+        return false;
+    }
     
 
 }
