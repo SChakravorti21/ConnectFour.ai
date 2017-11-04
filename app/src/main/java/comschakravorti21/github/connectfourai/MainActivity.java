@@ -1,6 +1,7 @@
 package comschakravorti21.github.connectfourai;
 
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public GameBoard gameboard;
     private int scoreP1, scoreP2;
     public CPU_Player cpu;
+    public MediaPlayer mPlayer;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         cpu = new CPU_Player(gameboard.getState());
         cpu.initTree();
 
+        //creates a media player
+        mPlayer = MediaPlayer.create(MainActivity.this, R.raw.clack);
+
         View.OnClickListener buttonClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 int col = Character.digit( ((String)button.getTag() ).charAt(1), 10) - 1;
 
                 //plays mp3 file when piece is placed
-                MediaPlayer mPlayer = MediaPlayer.create(MainActivity.this, R.raw.clack);
                 mPlayer.start();
 
                 //Start from bottom when searching where to insert piece
