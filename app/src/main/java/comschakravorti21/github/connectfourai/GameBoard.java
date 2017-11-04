@@ -17,6 +17,9 @@ public class GameBoard {
 
 
     public GameBoard() {
+        gameState = new int[ROWS][COLUMNS];
+        buttons = new ImageButton[ROWS][COLUMNS];
+
         for(int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
                 gameState[i][j] = 0;
@@ -44,6 +47,10 @@ public class GameBoard {
 
     public void changePieceColor(int row, int col, int res){
         buttons[row][col].setImageResource(res);
+    }
+
+    public int getState(int row, int col) {
+        return gameState[row][col];
     }
 
     

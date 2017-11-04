@@ -37,10 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 //Start from bottom when searching where to insert piece
                 for(int i = pieces.length - 1; i >= 0; i--) {
                     //Place the piece if its empty
-                    if(pieces[i][col] == 0) {
-
+                    if(gameboard.getState(i, col) == 0) {
                         gameboard.placePiece(i, col, player);
-
                         player = -player;
                         break;
                     }
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-            for(int i = 0; i < gridBoard.getChildCount(); i++) {
+        for(int i = 0; i < gridBoard.getChildCount(); i++) {
             ImageButton button = (ImageButton) gridBoard.getChildAt(i);
             button.setImageResource(R.mipmap.piece_empty);
             button.setOnClickListener(buttonClickListener);
