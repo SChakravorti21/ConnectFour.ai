@@ -73,14 +73,14 @@ public class MainActivity extends AppCompatActivity {
                 //Start from bottom when searching where to insert piece
                 for(int i = GameBoard.ROWS - 1; i >= 0; i--) {
                     //Place the piece if its empty
-                    Log.d("Element", "" + gameboard.getElement(i, col));
+                    //Log.d("Element", "" + gameboard.getElement(i, col));
 
                     if(gameboard.getElement(i, col) == 0) {
 
                         gameboard.placePiece(i, col, player);
 
                         if(gameboard.checkWin(i, col, player)) {
-                            Log.d("Check Win", "TRUE");
+                            //Log.d("Check Win", "TRUE");
                             if(player == PLAYER_1) {
                                 scoreP1++;
                                 TextView scoreView = (TextView)findViewById(R.id.score_P1);
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
                             gameboard.resetBoard();
                         } else{
-                            Log.d("Check Win", "FALSE");
+                            //Log.d("Check Win", "FALSE");
                         }
 
                         player = (byte)(-1 *player);

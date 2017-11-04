@@ -30,12 +30,12 @@ public class GameBoard {
 
     //returns row that it was placed in
     //@param playerNum, 1 if player 1,     -1 if player 2
-    public int placePiece(int row, int col, byte playerNum) {
+    public int placePiece(int row, int col, int playerNum) {
         //gameState[row][col] = playerNum;
         short data = gameState[row];
         //Create the player position and shift it by the necessary number of columns
         //00 is empty, 01 is player 1, 10 is player 2
-        short bitPlayer = (playerNum == PLAYER1_BIT) ? (short)(0b01 << (short)((COLUMNS - col - 1)*2)): (short)(0b10 << (short)((COLUMNS - col - 1)*2));
+        short bitPlayer = (playerNum == -1) ? (short)(PLAYER1_BIT << (short)((COLUMNS - col - 1)*2)): (short)(PLAYER2_BIT << (short)((COLUMNS - col - 1)*2));
 
         //Use OR operator to insert piece, then reset piece in array
         short newRow = (short)(data | bitPlayer);
@@ -60,10 +60,10 @@ public class GameBoard {
 
     public int getElement(int row, int col) {
         short data = gameState[row];
-        Log.d("Data", "" + data);
+        //Log.d("Data", "" + data);
         short ret = (short)(data >> (short)((GameBoard.COLUMNS - col - 1)*2));
         ret = (short)(ret & 0b11);
-        Log.d("Value", "" + ret);
+        //Log.d("Value", "" + ret);
         if(ret == PLAYER1_BIT)
             return -1;
         else if (ret == PLAYER2_BIT)
@@ -77,7 +77,7 @@ public class GameBoard {
     }
 
     public boolean checkWin(int row, int col, int player) {
-        Log.d("Check Win", "Entered");
+        //Log.d("Check Win", "Entered");
         short bitPlayer = (player == -1) ? PLAYER1_BIT : PLAYER2_BIT;
 
         for(int i = 0, r = row, c = col ; i < dx.length/2 && i < dy.length/2;
@@ -86,14 +86,20 @@ public class GameBoard {
             int x = dx[i];
             int y = dy[i];
 
+            //Log.d("dx ", "" + x);
+            //Log.d("dy ", "" + y);
+
             int count = 0;
             while(r < ROWS && r >= 0 && c < COLUMNS && c >= 0 && count < 4) {
 
                 short data = gameState[r];
-                short shift = (short)((GameBoard.COLUMNS - col - 1)*2);
-                data = (short)((data >>> shift) & 0b11);
+                //Log.d("Data", "" + data);
+                short shift = (short)((GameBoard.COLUMNS - c - 1)*2);
+                data = (short)(data >> shift & 0b11);
+                //Log.d("Modified Data", "row: " + r + ", col: " + c + ", data: " + data);
 
                 if(data == bitPlayer) {
+                    //Log.d("Check Win", "Found match");
                     count++;
                     //Log.d("COUNT, LOOP 1", "" + count);
                     r += y;
@@ -108,25 +114,28 @@ public class GameBoard {
                     && count < 4) {
 
                 short data = gameState[r];
-                short shift = (short)((GameBoard.COLUMNS - col - 1)*2);
-                data = (short)((data >>> shift) & 0b11);
+                //Log.d("Data", "" + data);
+                short shift = (short)((GameBoard.COLUMNS - c - 1)*2);
+                data = (short)(data >> shift & 0b11);
+                //Log.d("Modified Data", "row: " + r + ", col: " + c + ", data: " + data);
 
                 if(data == bitPlayer) {
+                    //Log.d("Check Win", "Found match");
                     count++;
                     //Log.d("COUNT, LOOP 1", "" + count);
-                    r += y;
-                    c += x;
+                    r -= y;
+                    c -= x;
                 } else
                     break;
             }
 
             if(count == 4) {
-                Log.d("Check Win", "Exiting");
+                //Log.d("Check Win", "Exiting");
                 return true;
             }
         }
 
-        Log.d("Check Win", "Exiting");
+        //Log.d("Check Win", "Exiting");
         return false;
     }
 
