@@ -236,7 +236,7 @@ public class GameBoard {
                             numInRow++;
                         } else {
                             int toAdd = (numInRow >= 3) ? (int) Math.pow(numInRow, 3) : 0;
-                            ret += (bitPlayer == PLAYER1_BIT) ? -toAdd : toAdd;
+                            ret = (bitPlayer == PLAYER1_BIT) ? (short)(ret-toAdd) : (short)(ret+toAdd);
                             numInRow = 0;
                         }
                     }

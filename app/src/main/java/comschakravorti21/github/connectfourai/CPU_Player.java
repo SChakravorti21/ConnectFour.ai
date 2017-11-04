@@ -37,14 +37,15 @@ public class CPU_Player {
 
                 int r = rowIfPlaced(c);
 
-                MiniMaxNode n = new MiniMaxNode(gameState, r, c, playerNum, node.getStaticValue());
-                Log.d("Static eval", "CALLED");
+                MiniMaxNode n = new MiniMaxNode(gameState, r, c, (short)~playerNum, node.getStaticValue());
                 n.setGameState(r, c, playerNum);
                 node.addChild(n);
                 //Log.d("current depth",  " " + currentDepth );
 
                 if(currentDepth < DEPTH){
                     initTree(n, (playerNum == -1) ? GameBoard.PLAYER1_BIT : GameBoard.PLAYER2_BIT, currentDepth + 1);
+                } else {
+                    Log.d("Static eval", "Static value: " + n.getStaticValue() );
                 }
             }
         }
