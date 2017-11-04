@@ -1,7 +1,5 @@
 package comschakravorti21.github.connectfourai;
 
-import android.util.Log;
-
 /**
  * Created by Athu on 11/4/2017.
  */
@@ -25,29 +23,31 @@ public class CPU_Player {
 
     }
 
-    public void initTree(MiniMaxNode node, byte playerNum, int currentDepth){
+    public void initTree(MiniMaxNode node, short playerNum, int currentDepth){
         //for loop find empty col, make nodes fo each empty column
 
         short[] gameState = node.getGamestate();
 
         for(int c = 0; c < GameBoard.COLUMNS; c++){
             int value = GameBoard.getElement(0, c, gameState);
+
             if(value == 0){
 
-                int r = returnRowIfPlaced(c);
+                int r = rowIfPlaced(c);
 
-                MiniMaxNode n = new MiniMaxNode(gameState, r, c, playerNum);
+                MiniMaxNode n = new MiniMaxNode(gameState, r, c, playerNum, node.getStaticValue());
                 n.setGameState(r, c, playerNum);
                 node.addChild(n);
-                //Log.d("current dept",  " " + currentDepth );
+                //Log.d("current depth",  " " + currentDepth );
 
                 if(currentDepth < DEPTH){
-                    initTree(n, (byte)(-1 *playerNum), currentDepth + 1);
+                    initTree(n, (playerNum == -1) ? GameBoard.PLAYER1_BIT : GameBoard.PLAYER2_BIT, currentDepth + 1);
                 }
             }
         }
     }
-    private int returnRowIfPlaced(int col){
+
+    public static int rowIfPlaced(int col, short[] gameState) {
         short c = (short)(GameBoard.COLUMNS - col - 1);
         short zero = 0b11;
 
@@ -63,6 +63,11 @@ public class CPU_Player {
         return -1;
     }
 
+
+    private int rowIfPlaced(int col){
+        return rowIfPlaced(col, gameState);
+    }
+
     //adds an extra layer to the bottom of the tree after each move has been made,
     //so the depth of the tree stays constant
     public void addTreeLayer(){
@@ -74,6 +79,7 @@ public class CPU_Player {
     public void setGameState(short[] gs){
         this.gameState = gs;
     }
+
 
 }
 

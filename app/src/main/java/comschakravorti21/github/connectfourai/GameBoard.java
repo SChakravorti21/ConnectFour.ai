@@ -159,6 +159,95 @@ public class GameBoard {
             }
         }
     }
+
+    public static short staticEval(short[] gameState, int lastMoveRow, int lastMoveCol,
+                                   short runningEval, short player) {
+        short ret = runningEval;
+
+        //We will try to minimize if the player is PLAYER 1, otherwise maximize
+        //if the player is PLAYER 2 (PLAYER 2 is CPU in this case)
+        short bitPlayer = (player == -1) ? PLAYER1_BIT : PLAYER2_BIT;
+
+        int index = 3, r = lastMoveRow, c = lastMoveCol;
+        short[] players = new short[7];
+        short[] empties = new short[7];
+        for (int i = 0; i < dx.length/2 && i < dy.length/2; i++) {
+
+            int x = dx[i];
+            int y = dy[i];
+
+            for(int j = 0; j < 4 && r < ROWS && r >= 0 && c < COLUMNS && c >= 0; j++) {
+
+                short data = gameState[r];
+                short shift = (short)((GameBoard.COLUMNS - c - 1)*2);
+                //Modify data to reflect the piece at the position
+                data = (short)(data >> shift & 0b11);
+
+                if(data == bitPlayer) {
+                    players[index] = bitPlayer;
+                }
+
+                r += y;
+                c += x;
+                index++;
+            }
+
+            r = lastMoveRow - y;
+            c = lastMoveCol - x;
+            index = 2;
+            for(int j = 0; j < 3 && r < ROWS && r >= 0 && c < COLUMNS && c >= 0 ; j++) {
+
+                short data = gameState[r];
+                short shift = (short)((GameBoard.COLUMNS - c - 1)*2);
+                //Modify data to reflect the piece at the position
+                data = (short)(data >> shift & 0b11);
+
+                if(data == bitPlayer) {
+                    players[index] = bitPlayer;
+                }
+
+                r -= y;
+                c -= x;
+                index--;
+            }
+
+            //EXTRACT INTO SEPARATE METHOD FOR READABILITY
+            //Now traverse the "players" array to find the possibilities
+            index = 0;
+            r = lastMoveRow - y*3;
+            c = lastMoveCol - x*3;
+
+            //MINIMIZE
+            if(player == PLAYER1_BIT) {
+                for (int j = 0; j < players.length; j++) {
+                    if (players[j] == 0) {
+                        empties[j] = 1;
+                    }
+
+                    index++;
+                    r += y;
+                    c += x;
+                }
+
+
+            }
+
+            //MAXIMIZE
+            else {
+
+            }
+
+
+
+            //Reset index values
+            players = new short[7];
+            index = 3;
+            r = lastMoveRow;
+            c = lastMoveCol;
+        }
+
+        return ret;
+    }
     
 
 }

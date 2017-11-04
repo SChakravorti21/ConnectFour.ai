@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final byte PLAYER_1 = -1;
     public static final byte PLAYER_2 = 1;
-    public static final byte CPU = 3;
+    //public static final byte CPU = 3;
 
     private Toolbar toolbar;
     private GridLayout gridBoard;
