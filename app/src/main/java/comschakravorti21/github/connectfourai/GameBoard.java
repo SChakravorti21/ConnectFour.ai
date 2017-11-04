@@ -15,19 +15,19 @@ public class GameBoard {
     public static final int[] dx = {0, 1, 1, 1, 0, -1, -1, -1};
     public static final int[] dy = {-1, -1, 0, 1, 1, 1, 0, -1};
 
-    private int[][] gameState;
+    private byte[][] gameState;
     private ImageButton[][] buttons;
     //0 = empty, 1 = blue, 2 = red
 
 
     public GameBoard() {
-        gameState = new int[ROWS][COLUMNS];
+        gameState = new byte[ROWS][COLUMNS];
         buttons = new ImageButton[ROWS][COLUMNS];
     }
 
     //returns row that it was placed in
     //@param playerNum, 1 if player 1,     -1 if player 2
-    public int placePiece(int row, int col, int playerNum) {
+    public int placePiece(int row, int col, byte playerNum) {
         gameState[row][col] = playerNum;
 
         if(playerNum == MainActivity.PLAYER_1) {
@@ -53,7 +53,7 @@ public class GameBoard {
         return gameState[row][col];
     }
 
-    public int[][] getState(){
+    public byte[][] getState(){
         return this.gameState;
     }
 

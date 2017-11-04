@@ -13,14 +13,14 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int PLAYER_1 = -1;
-    public static final int PLAYER_2 = 1;
-    public static final int CPU = 3;
+    public static final byte PLAYER_1 = -1;
+    public static final byte PLAYER_2 = 1;
+    public static final byte CPU = 3;
 
     private Toolbar toolbar;
     private GridLayout gridBoard;
-    private int[][] pieces;
-    private int player;
+    private byte[][] pieces;
+    private byte player;
     public GameBoard gameboard;
     private int scoreP1, scoreP2;
     public CPU_Player cpu;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gridBoard = (GridLayout)findViewById(R.id.board);
-        pieces = new int[GameBoard.ROWS][GameBoard.COLUMNS];
+        pieces = new byte[GameBoard.ROWS][GameBoard.COLUMNS];
         player = PLAYER_1;
         scoreP1 = scoreP2 = 0;
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("Check Win", "FALSE");
                         }
 
-                        player = -player;
+                        player = (byte)(-1 *player);
                         break;
                     }
                 }

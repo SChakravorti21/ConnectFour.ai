@@ -10,10 +10,10 @@ public class CPU_Player {
 
     public MiniMaxNode root;
     private int difficulty;
-    private int[][] gameState;
-    private final int DEPTH = 5;
+    private byte[][] gameState;
+    private final int DEPTH = 6;
 
-    public CPU_Player(int[][] gameS){
+    public CPU_Player(byte[][] gameS){
         this.root = new MiniMaxNode();
         this.gameState = gameS;
     }
@@ -25,10 +25,10 @@ public class CPU_Player {
 
     }
 
-    public void initTree(MiniMaxNode node, int playerNum, int currentDepth){
+    public void initTree(MiniMaxNode node, byte playerNum, int currentDepth){
         //for loop find empty col, make nodes fo each empty column
 
-        int[][] gameState = node.getGamestate();
+        byte[][] gameState = node.getGamestate();
 
         for(int c = 0; c < GameBoard.COLUMNS; c++){
             if(gameState[0][c] == 0 ){
@@ -41,7 +41,7 @@ public class CPU_Player {
                 //Log.d("current dept",  " " + currentDepth );
 
                 if(currentDepth < DEPTH){
-                    initTree(n, -playerNum, currentDepth + 1);
+                    initTree(n, (byte)(-1 *playerNum), currentDepth + 1);
                 }
             }
         }
@@ -64,7 +64,7 @@ public class CPU_Player {
 
     //This set method works with the following method instrction .Basicaly, we pass in a game
     //state and then the class variable game state gets updated!!!!!!!!!!
-    public void setGameState(int[][] gs){
+    public void setGameState(byte[][] gs){
         this.gameState = gs;
     }
 
