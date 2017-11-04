@@ -23,12 +23,6 @@ public class GameBoard {
     public GameBoard() {
         gameState = new int[ROWS][COLUMNS];
         buttons = new ImageButton[ROWS][COLUMNS];
-
-        for(int i = 0; i < ROWS; i++) {
-            for(int j = 0; j < COLUMNS; j++) {
-                gameState[i][j] = 0;
-            }
-        }
     }
 
     //returns row that it was placed in
@@ -42,6 +36,8 @@ public class GameBoard {
             this.changePieceColor(row, col, R.mipmap.piece_red);
         }
 
+
+
         return row;
     }
 
@@ -53,8 +49,12 @@ public class GameBoard {
         buttons[row][col].setImageResource(res);
     }
 
-    public int getState(int row, int col) {
+    public int getElement(int row, int col) {
         return gameState[row][col];
+    }
+
+    public int[][] getState(){
+        return this.gameState;
     }
 
     public boolean checkWin(int row, int col, int player) {
@@ -94,8 +94,10 @@ public class GameBoard {
     public void resetBoard() {
         for(int i = 0; i < ROWS; i++) {
             for(int j = 0; j < COLUMNS; j++) {
-                gameState[i][j] = 0;
-                buttons[i][j].setImageResource(R.mipmap.piece_empty);
+                if(gameState[i][j] != 0) {
+                    gameState[i][j] = 0;
+                    buttons[i][j].setImageResource(R.mipmap.piece_empty);
+                }
             }
         }
     }

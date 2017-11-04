@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private int player;
     public GameBoard gameboard;
     private int scoreP1, scoreP2;
+    public CPU_Player cpu;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         gameboard = new GameBoard();
 
+        cpu = new CPU_Player(gameboard.getState());
+        cpu.initTree();
+
         View.OnClickListener buttonClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 //Start from bottom when searching where to insert piece
                 for(int i = pieces.length - 1; i >= 0; i--) {
                     //Place the piece if its empty
-                    if(gameboard.getState(i, col) == 0) {
+                    if(gameboard.getElement(i, col) == 0) {
 
                         gameboard.placePiece(i, col, player);
 
