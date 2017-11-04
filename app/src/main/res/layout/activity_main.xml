@@ -15,4 +15,443 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <GridLayout
+        android:id="@+id/board"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="144dp"
+        android:columnCount="7"
+        android:rowCount="6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:background="#3486FF">
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="11"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="12"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="13"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="14"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="15"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="16"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="17"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="21"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="22"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="23"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="24"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="25"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="26"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="27"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="31"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="32"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="33"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="34"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="35"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="36"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="37"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="41"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="42"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="43"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="44"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="45"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="46"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="47"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="51"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="52"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="53"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="54"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="55"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="56"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="57"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="61"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="62"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="63"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="64"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="65"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="66"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:foreground="@mipmap/piece_empty"
+            android:tag="67"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:scaleType="centerCrop"/>
+
+    </GridLayout>
+
 </android.support.constraint.ConstraintLayout>
