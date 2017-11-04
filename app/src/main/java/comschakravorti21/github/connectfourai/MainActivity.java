@@ -14,9 +14,14 @@ import static android.R.attr.tag;
 
 public class MainActivity extends AppCompatActivity {
 
-    GridLayout board;
-    ImageButton[][] buttons;
-    int[][] pieces;
+    public static final int PLAYER_1 = -1;
+    public static final int PLAYER_2 = 1;
+    public static final int CPU = 3;
+
+    private GridLayout board;
+    private ImageButton[][] buttons;
+    private int[][] pieces;
+    private int player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         board = (GridLayout)findViewById(R.id.board);
         buttons = new ImageButton[6][7];
         pieces = new int[6][7];
+        player = PLAYER_1;
 
         View.OnClickListener buttonClickListener = new View.OnClickListener() {
             @Override
@@ -37,7 +43,14 @@ public class MainActivity extends AppCompatActivity {
                     //Place the piece if its empty
                     if(pieces[i][col] == 0) {
                         pieces[i][col] = 1;
-                        buttons[i][col].setImageResource(R.mipmap.piece_yellow);
+
+                        if(player == PLAYER_1) {
+                            buttons[i][col].setImageResource(R.mipmap.piece_yellow);
+                        } else {
+                            buttons[i][col].setImageResource(R.mipmap.piece_red);
+                        }
+
+                        player = -player;
                         break;
                     }
                 }
