@@ -1,5 +1,6 @@
 package comschakravorti21.github.connectfourai;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -71,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
                 ImageButton button = (ImageButton)view;
 
                 int col = Character.digit( ((String)button.getTag() ).charAt(1), 10) - 1;
+
+                //plays mp3 file when piece is placed
+                MediaPlayer mPlayer = MediaPlayer.create(MainActivity.this, R.raw.clack);
+                mPlayer.start();
 
                 //Start from bottom when searching where to insert piece
                 for(int i = GameBoard.ROWS - 1; i >= 0; i--) {
