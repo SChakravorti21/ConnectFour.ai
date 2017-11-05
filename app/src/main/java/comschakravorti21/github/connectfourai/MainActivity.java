@@ -1,7 +1,6 @@
 package comschakravorti21.github.connectfourai;
 
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,16 +23,16 @@ public class MainActivity extends AppCompatActivity {
     //private short[] pieces;
     //private byte[][] pieces;
     private short player;
-    public GameBoard gameboard;
+    public GameBoard gameBoard;
     private int scoreP1, scoreP2;
-    public CPU_Player cpu;
+    public CPU_Player CPU;
     public MediaPlayer mPlayer;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_reset:
-                gameboard.resetBoard();
+                gameBoard.resetBoard();
                 scoreP1 = 0;
                 TextView scoreView1 = (TextView)findViewById(R.id.score_P1);
                 scoreView1.setText("0");
@@ -63,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        gameboard = new GameBoard();
+        gameBoard = new GameBoard();
 
-        cpu = new CPU_Player(gameboard.getState());
-        cpu.initTree();
+        CPU = new CPU_Player(gameBoard.getState());
+        CPU.initTree();
 
         //creates a media player
         mPlayer = MediaPlayer.create(MainActivity.this, R.raw.clack);
@@ -85,13 +84,13 @@ public class MainActivity extends AppCompatActivity {
                 //Start from bottom (now we're here) when searching where to insert piece
                 for(int i = GameBoard.ROWS - 1; i >= 0; i--) {
                     //Place the piece if its empty
-                    //Log.d("Element", "" + gameboard.getElement(i, col));
+                    //Log.d("Element", "" + gameBoard.getElement(i, col));
 
-                    if(gameboard.getElement(i, col) == 0) {
+                    if(gameBoard.getElement(i, col) == 0) {
 
-                        gameboard.placePiece(i, col, player);
+                        gameBoard.placePiece(i, col, player);
 
-                        if(gameboard.checkWin(i, col, player)) {
+                        if(gameBoard.checkWin(i, col, player)) {
                             //Log.d("Check Win", "TRUE");
                             if(player == PLAYER_1) {
                                 scoreP1++;
@@ -104,13 +103,14 @@ public class MainActivity extends AppCompatActivity {
 //                                scoreView.setText("" + scoreP2);
 //                            }
 
-                            gameboard.resetBoard();
+                            gameBoard.resetBoard();
 
-                            //Need to reset tree
+                            CPU.resetTree();
                         } else{
                             //Log.d("Check Win", "FALSE");
 
                             //Otherwise move down tree and extend tree by 1 level
+                            CPU.shiftRoot(i, col, player);
                         }
 
                         player = PLAYER_2;
@@ -119,24 +119,25 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //After the user plays, we want the CPU to play
-                int c = cpu.computeBestMove(); //gets the columns corresponding to the best move
-                int r = CPU_Player.rowIfPlaced(c, gameboard.getState());
+                int c = CPU.computeBestMove(); //gets the columns corresponding to the best move
+                int r = CPU_Player.rowIfPlaced(c, gameBoard.getState());
                 Log.d("Coords", "Row: " + r + ", Col: " + c);
-                gameboard.placePiece(r, c, player); //place the piece, change the color
+                gameBoard.placePiece(r, c, player); //place the piece, change the color
 
-                if(gameboard.checkWin(r, c, player)) {
+                if(gameBoard.checkWin(r, c, player)) {
                     //Log.d("Check Win", "TRUE");
                     scoreP2++;
                     TextView scoreView = (TextView)findViewById(R.id.score_P2);
                     scoreView.setText("" + scoreP2);
 
-                    gameboard.resetBoard();
+                    gameBoard.resetBoard();
 
-                    //Need to reset game tree
+                    CPU.resetTree();
                 } else{
                     //Log.d("Check Win", "FALSE");
 
                     //Need to move down game tree by 1 and extend tree by 1
+                    CPU.shiftRoot(r, c, player);
                 }
 
                 player = PLAYER_1;
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             String tag = (String)button.getTag();
             int row = Character.digit(tag.charAt(0), 10);
             int col = Character.digit(tag.charAt(1), 10);
-            gameboard.setButtonImg(row-1, col-1, button);
+            gameBoard.setButtonImg(row-1, col-1, button);
         }
 
     }

@@ -1,7 +1,5 @@
 package comschakravorti21.github.connectfourai;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -20,6 +18,13 @@ public class CPU_Player {
         this.gameState = gameS;
     }
 
+    public void resetTree() {
+        root = new MiniMaxNode();
+        this.gameState = new short[6];
+
+        initTree();
+    }
+
     //preloads a tree of a certain depth
     public void initTree(){
         //for loop find empty col, make nodes fo each empty column
@@ -30,7 +35,7 @@ public class CPU_Player {
     public void initTree(MiniMaxNode node, short playerNum, int currentDepth){
         //for loop find empty col, make nodes fo each empty column
 
-        short[] gameState = node.getGamestate();
+        short[] gameState = node.getGameState();
 
         for(int c = 0; c < GameBoard.COLUMNS; c++){
             int value = GameBoard.getElement(0, c, gameState);
@@ -91,6 +96,16 @@ public class CPU_Player {
         }
 
         return bestColumn;
+    }
+
+    public void shiftRoot(int row, int col, short player) {
+        //Check children and reset root once we find the corresponding player
+        for (MiniMaxNode child: root.getChildren()) {
+            if(GameBoard.getElement(row, col, child.getGameState()) == player) {
+                root = child;
+                return;
+            }
+        }
     }
 
     public static int rowIfPlaced(int col, short[] gameState) {

@@ -9,27 +9,28 @@ import java.util.ArrayList;
 public class MiniMaxNode {
 
     private ArrayList<MiniMaxNode> children;
-    private short[] gamestate;
+    private short[] gameState;
     private short staticValue;
     private boolean isMax;
 
+    //Only used for root
     public MiniMaxNode(){
         children = new ArrayList<>(7);
-        gamestate = new short[6];
+        gameState = new short[6];
     }
 
     public MiniMaxNode(short[] prevGameState, short staticValue){
-        this.gamestate = prevGameState;
+        this.gameState = prevGameState;
         this.staticValue = staticValue;
         //children = new ArrayList<>(7);
     }
 
     public MiniMaxNode(short[] prevGameState, int r, int c, short currentPlayerNum, short staticValue){
-        this.gamestate = prevGameState;
-        GameBoard.placePiece(r, c, gamestate, currentPlayerNum);
+        this.gameState = prevGameState;
+        GameBoard.placePiece(r, c, gameState, currentPlayerNum);
 
         this.staticValue = staticValue;
-        this.staticValue = GameBoard.staticEval(gamestate, r, c, currentPlayerNum, staticValue);
+        this.staticValue = GameBoard.staticEval(gameState, r, c, currentPlayerNum, staticValue);
 
         //children = new ArrayList<>(7);
     }
@@ -53,11 +54,11 @@ public class MiniMaxNode {
         children.add(node);
     }
 
-    public short[] getGamestate() {
-        return gamestate;
+    public short[] getGameState() {
+        return gameState;
     }
 
     public void setGameState(int r, int c, short playerNum) {
-        GameBoard.placePiece(r, c, gamestate, playerNum);
+        GameBoard.placePiece(r, c, gameState, playerNum);
     }
 }
