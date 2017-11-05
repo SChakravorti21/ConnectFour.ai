@@ -162,7 +162,7 @@ public class GameBoard {
 
     public void resetBoard() {
         for(int i = 0; i < ROWS; i++) {
-            gameState[i] = 0b0;
+            gameState[i] = 0b00;
             for(int j = 0; j < COLUMNS; j++) {
                 buttons[i][j].setImageResource(R.mipmap.piece_empty);
             }
