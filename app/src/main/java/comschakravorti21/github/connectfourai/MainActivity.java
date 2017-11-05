@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.action_reset:
                 gameBoard.resetBoard();
+                CPU.resetTree();
+
                 scoreP1 = 0;
                 TextView scoreView1 = (TextView)findViewById(R.id.score_P1);
                 scoreView1.setText("0");

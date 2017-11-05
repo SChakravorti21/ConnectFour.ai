@@ -115,17 +115,17 @@ public class CPU_Player {
                 if(vals[i] > vals[bestColumn]) {
                     bestColumn = i;
                     hasFoundBetterMove = true;
-                    alpha = vals[i];
+                    //alpha = vals[i];
                 } else if(vals[i] < alpha) {
-                    return bestColumn;
+                    //return bestColumn;
                 }
             } else if(!maximizing) {
                 if(vals[i] < vals[bestColumn]) {
                     bestColumn = i;
                     hasFoundBetterMove = true;
-                    beta = vals[i];
+                    //beta = vals[i];
                 } else if(vals[i] > beta) {
-                    return bestColumn;
+                    //return bestColumn;
                 }
             }
         }
@@ -138,9 +138,15 @@ public class CPU_Player {
 
     public void shiftRoot(int row, int col, short player) {
         //Check children and reset root once we find the corresponding player
+
+        if(root == null || root.getChildren() == null) {
+            Log.d("ROOT", "SOMETHING IS BROKEN");
+            return;
+        }
+
         for (MiniMaxNode child: root.getChildren()) {
             short val = GameBoard.getElement(row, col, child.getGameState());
-            Log.d("Value", "row: " + row + ", col: " + col + ", val: " + val);
+            //Log.d("Value", "row: " + row + ", col: " + col + ", val: " + val);
 
             if( val == player) {
                 //root.setChildren(null);
@@ -186,7 +192,7 @@ public class CPU_Player {
 
 
     public void replenishTree(short lastPlayer, int startIndex, int endIndex) {
-        Log.d("Replenish", "call on replenish");
+        //Log.d("Replenish", "call on replenish");
         ArrayList<MiniMaxNode> newSet = new ArrayList<>(120000);
 
         short newPlayer = (lastPlayer == MainActivity.PLAYER_1) ? MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
@@ -211,7 +217,7 @@ public class CPU_Player {
 
         //lastLayer = null;
         lastLayer = (ArrayList<MiniMaxNode>)newSet.clone();
-        Log.d("Replenish", "FINISH on replenish");
+        //Log.d("Replenish", "FINISH on replenish");
     }
 
 
