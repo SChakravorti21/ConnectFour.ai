@@ -32,6 +32,7 @@ public class MiniMaxNode {
     public MiniMaxNode(short[] prevGameState, int r, int c, short currentPlayerNum, short staticValue){
         GameBoard.placePiece(r, c, prevGameState, currentPlayerNum);
         this.gameState = prevGameState;
+        //Log.d("Something", "" + gameState[r]);
 
         this.staticValue = staticValue;
         this.staticValue = GameBoard.staticEval(gameState, r, c, currentPlayerNum, staticValue);
@@ -43,7 +44,7 @@ public class MiniMaxNode {
     //This way, we can easily tell when a node is a leaf node ––
     //if node.getChildren() == null
     public void instantiateChildrenList() {
-        children = new ArrayList<>(); //Not specifying size bc number of children can vary
+        children = new ArrayList<MiniMaxNode>(); //Not specifying size bc number of children can vary
     }
 
     public ArrayList<MiniMaxNode> getChildren() {
@@ -55,6 +56,9 @@ public class MiniMaxNode {
     }
 
     public void addChild(MiniMaxNode node){
+        if(children == null)
+            children = new ArrayList<>();
+
         children.add(node);
     }
 

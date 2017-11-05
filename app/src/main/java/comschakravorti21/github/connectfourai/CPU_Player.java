@@ -40,25 +40,29 @@ public class CPU_Player {
 
         short[] gameState = node.getGameState();
 
-        short newPlayer = ((playerNum & 0b11) == MainActivity.PLAYER_1) ? MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
+        short newPlayer = (playerNum == MainActivity.PLAYER_1) ? MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
 
         for(int c = 0; c < GameBoard.COLUMNS; c++){
-            //short value = GameBoard.getElement(0, c, gameState);
+            short value = GameBoard.getElement(0, c, gameState);
 
             int r = rowIfPlaced(c, gameState);
-            if(r != -1){
 
-                MiniMaxNode n = new MiniMaxNode(gameState, r, c, newPlayer, node.getStaticValue());
-                //n.setGameState(r, c, newPlayer);
+            //if(r != -1){
+
+            MiniMaxNode n = null;
+            if(value == 0) {
+
+                n = new MiniMaxNode(gameState, r, c, newPlayer, node.getStaticValue());
                 node.addChild(n);
-                //Log.d("current depth",  " " + currentDepth );
 
-                if(currentDepth < DEPTH){
-                    n.instantiateChildrenList();
-                    initTree(n, newPlayer, currentDepth + 1);
-                }
+            }
+
+            if(n != null && currentDepth < DEPTH) {
+                initTree(n, newPlayer, currentDepth + 1);
             }
         }
+
+        Log.d("Num Children", "" + node.getChildren().size() + ", depth" + currentDepth);
     }
 
     //No argument method
