@@ -91,9 +91,9 @@ public class GameBoard {
         return this.gameState;
     }
 
-    public boolean checkWin(int row, int col, int player) {
+    public boolean checkWin(int row, int col, short player) {
         //Log.d("Check Win", "Entered");
-        short bitPlayer = (player == -1) ? PLAYER1_BIT : PLAYER2_BIT;
+        short bitPlayer = player;
 
         for(int i = 0, r = row, c = col ; i < dx.length/2 && i < dy.length/2;
                 i++, r = row, c = col) {

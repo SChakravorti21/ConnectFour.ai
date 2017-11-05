@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 mPlayer.start();
 
 
-                //Start from bottom when searching where to insert piece
+                //Start from bottom (now we're here) when searching where to insert piece
                 for(int i = GameBoard.ROWS - 1; i >= 0; i--) {
                     //Place the piece if its empty
                     //Log.d("Element", "" + gameboard.getElement(i, col));

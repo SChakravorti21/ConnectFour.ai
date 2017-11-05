@@ -46,7 +46,7 @@ public class CPU_Player {
 
                 if(currentDepth < DEPTH){
                     n.instantiateChildrenList();
-                    initTree(n, (playerNum == -1) ? GameBoard.PLAYER1_BIT : GameBoard.PLAYER2_BIT, currentDepth + 1);
+                    initTree(n, playerNum, currentDepth + 1);
                 } else {
                     //Log.d("Static eval", "Static value: " + n.getStaticValue() );
                 }
