@@ -94,17 +94,14 @@ public class CPU_Player {
     }
 
     public static int rowIfPlaced(int col, short[] gameState) {
-        short c = (short)(GameBoard.COLUMNS - col - 1);
+        short c = (short)((GameBoard.COLUMNS - col - 1)*2);
         short zero = 0b11;
 
         for(int i = GameBoard.ROWS- 1; i >= 0; i--) {
 
             short data = gameState[i];
 
-
             if( ((data >> c) & zero) == 0b00){
-                //Log.d("Data", "" + data );
-                //Log.d("Value", "" + ((data >> c) & zero));
                 return i;
             }
         }
