@@ -170,18 +170,184 @@ public class GameBoard {
         }
     }
 
-    public static short staticEval(short[] gameState, int lastMoveRow, int lastMoveCol,
+    public static short staticEval(short[] gameStateCopy, short player) {
+        short[] gameState = Arrays.copyOf(gameStateCopy, gameStateCopy.length);
+        short[] players = new short[7];
+
+        short ret = 0;
+
+        int r = 5;
+        int c = 0;
+
+        //check rows for horizontal maxNums at columns 4 (index 3)
+        //Use only dx
+        for(; r >= 0; r--) {
+            for(int index = 0; index < players.length; index++) {
+                short element = GameBoard.getElement(r, c, gameState);
+                players[index] = element;
+                c++;
+            }
+
+            ret += maxNumInRowForPlayer(players, player);
+            ret -= maxNumInRowForOpposing(players, player);
+            c = 0;
+        }
+        players = new short[7];
+
+
+        //check columns for vertical maxNums at row 4 (index 3)
+        //use only dy
+        c = 0; r = 0;
+        for(; c < COLUMNS; c++) {
+            for(int index = 0; index < players.length && index < gameState.length; index++) {
+                short element = GameBoard.getElement(r, c, gameState);
+                players[index] = element;
+                r++;
+            }
+
+            ret += maxNumInRowForPlayer(players, player);
+            ret -= maxNumInRowForOpposing(players, player);
+
+            r = 0;
+        }
+        players = new short[7];
+
+        //check NE diagonals for maxNums from (3, 0) to (3, 5) –– can exclude last element in row
+        //use only dy - and dx +
+        int dx = 1;
+        int dy = 1;
+        r = 2; c = 0;
+        int[] rs = {2, 1, 0, 0, 0, 0};
+        int[] cs = {0, 0, 0, 1, 2, 3};
+
+        for(int i = 0; i < COLUMNS - 1; i++) {
+            for(int index = 0; r < gameState.length && index < players.length; index++) {
+                short element = GameBoard.getElement(r, c, gameState);
+                players[index] = element;
+                r += dy;
+                c += dx;
+            }
+
+            ret += maxNumInRowForPlayer(players, player);
+            ret -= maxNumInRowForOpposing(players, player);
+
+            r = rs[i];
+            c = cs[i];
+        }
+        players = new short[7];
+
+
+        //check SE diagonals for maxNums from (3, 1) to (3, 6) –– can exclude first element in row
+        //use only dy + and dx +
+        dx = -1;
+        dy = 1;
+        r = 2; c = 6;
+        rs = new int[]{2, 1, 0, 0, 0, 0};
+        cs = new int[]{0, 0, 0, 1, 2, 3};
+
+        for(int i = 0; i < COLUMNS - 1; i++) {
+            for (int index = 0; r < gameState.length && index < players.length; index++) {
+                short element = GameBoard.getElement(r, c, gameState);
+                players[index] = element;
+                r += dy;
+                c += dx;
+            }
+
+            ret += maxNumInRowForPlayer(players, player);
+            ret -= maxNumInRowForOpposing(players, player);
+
+            r = rs[i];
+            c = cs[i];
+        }
+
+        return ret;
+    }
+
+    private static int maxNumInRowForPlayer(short[] players, short id) {
+        int max = 0;
+        int count = 0;
+        int ret = 0;
+
+        for (int i = 0; i < players.length; i++) {
+            if (players[i] == id) {
+                count++;
+            } else if (count > max) {
+                max = count;
+                count = 0;
+            }
+        }
+
+
+        if(max >= 4) {
+            ret = 1000;
+        } else if(max == 3) {
+            ret = 100;
+        }
+
+        return ret;
+    }
+
+    private static int maxNumInRowForOpposing(short[] players, short id) {
+        int max = 0;
+        int count = 0;
+        int ret = 0;
+        id = (id == PLAYER1_BIT) ? PLAYER2_BIT : PLAYER1_BIT;
+
+        for (int i = 0; i < players.length; i++) {
+            if (players[i] == id) {
+                count++;
+            } else if (count > max) {
+                max = count;
+                count = 0;
+            }
+        }
+
+
+        if(max >= 4) {
+            ret = 2000;
+        } else if(max == 3) {
+            ret = 1000;
+        }
+
+        return ret;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static short staticEval(short[] gameStateCopy, int lastMoveRow, int lastMoveCol,
                                    short runningEval, short player) {
+
+        short[] gameState = Arrays.copyOf(gameStateCopy, gameStateCopy.length);
         short ret = runningEval;
 
         //We will try to minimize if the player is PLAYER 1, otherwise maximize
         //if the player is PLAYER 2 (PLAYER 2 is CPU in this case)
         short bitPlayer = player;
+        short opposingPlayer = (player == PLAYER1_BIT) ? PLAYER2_BIT : PLAYER1_BIT;
 
         int index = 3, r = lastMoveRow, c = lastMoveCol;
         short[] players = new short[7];
         short[] empties = new short[7];
-        for (int i = 0; i < dx.length / 2 && i < dy.length / 2; i++) {
+        short[] opposingEmpties = new short[7];
+        for (int i = 0; i < dx.length && i < dy.length; i++) {
 
             int x = dx[i];
             int y = dy[i];
@@ -191,10 +357,9 @@ public class GameBoard {
                 short data = gameState[r];
                 short shift = (short) ((GameBoard.COLUMNS - c - 1) * 2);
                 //Modify data to reflect the piece at the position
-                data = (short) (data >> shift & 0b11);
+                data = (short) ((data >>> shift) & 0b11);
 
                 players[index] = data;
-
 
                 r += y;
                 c += x;
@@ -209,7 +374,7 @@ public class GameBoard {
                 short data = gameState[r];
                 short shift = (short) ((GameBoard.COLUMNS - c - 1) * 2);
                 //Modify data to reflect the piece at the position
-                data = (short) (data >> shift & 0b11);
+                data = (short) ((data >>> shift) & 0b11);
 
                 players[index] = data;
 
@@ -221,12 +386,13 @@ public class GameBoard {
             //EXTRACT INTO SEPARATE METHOD FOR READABILITY
             //Now traverse the "players" array to find the possibilities
             index = 0;
-            r = lastMoveRow - y * 3;
-            c = lastMoveCol - x * 3;
+            r = lastMoveRow - (y * 3);
+            c = lastMoveCol - (x * 3);
 
             for (int j = 0; j < players.length; j++) {
                 if (players[j] == 0 && CPU_Player.rowIfPlaced(c, gameState) == r) {
                     empties[j] = bitPlayer;
+                    opposingEmpties[j] = opposingPlayer;
                 }
 
                 index++;
@@ -234,22 +400,42 @@ public class GameBoard {
                 c += x;
             }
 
-            int numInRow = 0;
             for (int j = 0; j < empties.length; j++) {
                 if (empties[j] == bitPlayer) {
+                    short temp = players[j];
                     players[j] = bitPlayer;
 
-                    for (int k = 0; k < players.length; k++) {
-                        if (players[k] == bitPlayer && numInRow < 4) {
-                            numInRow++;
-                        } else {
-                            int toAdd = (numInRow >= 3) ? (int) Math.pow(numInRow, 3) : 0;
-                            ret = (bitPlayer == PLAYER1_BIT) ? (short)(ret-toAdd) : (short)(ret+toAdd);
-                            numInRow = 0;
-                        }
-                    }
+                    int maxNumInRow = maxNumInRow(players, bitPlayer);
+                    int add = 0;
+                    if(maxNumInRow >= 4)
+                        add = 1000;
+                    else if(maxNumInRow == 3)
+                        add = 100;
 
-                    players[j] = 0;
+                    if(add != 0)
+                        ret = (bitPlayer == PLAYER2_BIT) ? (short)(ret+add) : (short)(ret-add);
+
+                    players[j] = temp;
+                }
+            }
+
+            //Also calculate how changes in game state affect opponent's situation
+            for (int j = 0; j < opposingEmpties.length; j++) {
+                if (opposingEmpties[j] == opposingPlayer) {
+                    short temp = players[j];
+                    players[j] = opposingPlayer;
+
+                    int maxNumInRow = maxNumInRow(players, opposingPlayer);
+                    int add = 0;
+                    if(maxNumInRow >= 4)
+                        add = 2000;
+                    else if(maxNumInRow == 3)
+                        add = 1000;
+
+                    if(add != 0)
+                        ret = (bitPlayer == PLAYER1_BIT) ? (short)(ret-add) : (short)(ret+add);
+
+                    players[j] = temp;
                 }
             }
 
@@ -265,4 +451,17 @@ public class GameBoard {
     }
     
 
+    private static int maxNumInRow(short[] players, short id) {
+        int max = 0;
+        int count = 0;
+        for(int i = 0; i < players.length; i++) {
+            if(players[i] == id) {
+                count++;
+            } else if(count > max) {
+                max = count;
+                count = 0;
+            }
+        }
+        return max;
+    }
 }

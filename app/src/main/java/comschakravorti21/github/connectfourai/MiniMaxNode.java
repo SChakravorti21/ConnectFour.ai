@@ -35,7 +35,8 @@ public class MiniMaxNode {
         //Log.d("Something", "" + gameState[r]);
 
         this.staticValue = staticValue;
-        this.staticValue = GameBoard.staticEval(gameState, r, c, currentPlayerNum, staticValue);
+        this.staticValue = GameBoard.staticEval(gameState, r, c, staticValue, currentPlayerNum);
+        //this.staticValue = GameBoard.staticEval(gameState, r, c, (short)0, currentPlayerNum);
 
         children = null;
     }
@@ -46,6 +47,10 @@ public class MiniMaxNode {
 
     public short getStaticValue() {
         return staticValue;
+    }
+
+    public void setStaticValue(short staticValue) {
+        this.staticValue = staticValue;
     }
 
     public void addChild(MiniMaxNode node){
