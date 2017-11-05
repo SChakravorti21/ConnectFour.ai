@@ -94,6 +94,7 @@ public class CPU_Player {
         }
 
         int bestColumn = 0;
+        boolean hasFoundBetterMove = false;
         int[] vals = new int[children.size()];
         for(int i = 0; i < vals.length; i++) {
             vals[i] = computeBestMove(children.get(i), !maximizing);
@@ -102,12 +103,17 @@ public class CPU_Player {
         for(int i = 0; i < vals.length; i++) {
             if(maximizing && vals[i] > vals[bestColumn]) {
                 bestColumn = i;
+                hasFoundBetterMove = true;
             } else if(!maximizing && vals[i] < vals[bestColumn]) {
                 bestColumn = i;
+                hasFoundBetterMove = true;
             }
         }
 
-        return bestColumn;
+        if(hasFoundBetterMove)
+            return bestColumn;
+        else
+            return (int)Math.random()*7;
     }
 
     public void shiftRoot(int row, int col, short player) {
