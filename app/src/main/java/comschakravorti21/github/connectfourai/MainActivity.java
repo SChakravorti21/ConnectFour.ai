@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         CPU.initTree();
 
         songPlayer = MediaPlayer.create(getApplicationContext(), R.raw.connect4);
-
+        songPlayer.setLooping(true);
         songPlayer.start();
 
         //creates a media player
