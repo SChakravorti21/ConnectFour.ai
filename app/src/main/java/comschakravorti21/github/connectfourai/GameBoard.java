@@ -33,7 +33,7 @@ public class GameBoard {
     }
 
     //returns row that it was placed in
-    //@param playerNum, 1 if player 1,     -1 if player 2
+    //@param playerNum, 01 if player 1, 10 if player 2
     public int placePiece(int row, int col, short playerNum) {
         //gameState[row][col] = playerNum;
         placePiece(row, col, gameState, playerNum);
