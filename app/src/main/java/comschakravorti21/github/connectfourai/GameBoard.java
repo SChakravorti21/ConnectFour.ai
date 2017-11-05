@@ -47,6 +47,7 @@ public class GameBoard {
         return row;
     }
 
+
     public static void placePiece(int row, int col, short[] gameState, short playerNum) {
         short data = gameState[row];
         //Create the player position and shift it by the necessary number of columns
