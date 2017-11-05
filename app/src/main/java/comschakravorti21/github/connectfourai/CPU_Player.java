@@ -122,6 +122,36 @@ public class CPU_Player {
                 return;
             }
         }
+
+        //call replenish method
+    }
+
+    public void replenishTree(MiniMaxNode node, short player) {
+
+        ArrayList<MiniMaxNode> children = node.getChildren();
+
+        short newPlayer = (player == MainActivity.PLAYER_1) ? MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
+
+        //if no children, we must add a bunch of new children here.
+        if(children == null){
+            short[] gameState = Arrays.copyOf(node.getGameState(), 7);
+
+            for(int c = 0; c < GameBoard.COLUMNS; c++){
+
+                int r = rowIfPlaced(c, gameState);
+
+                if(r != -1) {
+                    MiniMaxNode n = new MiniMaxNode(gameState, r, c, newPlayer, node.getStaticValue());
+                    node.addChild(n);
+                }
+            }
+
+        }
+        else {
+            for (int i = 0; i < children.size(); i++) {
+                replenishTree(children.get(i), newPlayer);
+            }
+        }
     }
 
     public static int rowIfPlaced(int col, short[] gameState) {
