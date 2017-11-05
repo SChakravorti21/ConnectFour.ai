@@ -1,5 +1,7 @@
 package comschakravorti21.github.connectfourai;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -88,9 +90,9 @@ public class CPU_Player {
         }
 
         for(int i = 0; i < vals.length; i++) {
-            if(maximizing && vals[i] > vals[bestColumn]) {
+            if(!maximizing && vals[i] > vals[bestColumn]) {
                 bestColumn = i;
-            } else if(!maximizing && vals[i] < vals[bestColumn]) {
+            } else if(maximizing && vals[i] < vals[bestColumn]) {
                 bestColumn = i;
             }
         }
@@ -102,6 +104,7 @@ public class CPU_Player {
         //Check children and reset root once we find the corresponding player
         for (MiniMaxNode child: root.getChildren()) {
             if(GameBoard.getElement(row, col, child.getGameState()) == player) {
+                Log.d("Shifting root", "TRUE");
                 root = child;
                 return;
             }

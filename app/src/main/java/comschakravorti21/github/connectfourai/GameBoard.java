@@ -79,12 +79,8 @@ public class GameBoard {
         short ret = (short)(data >> (short)((GameBoard.COLUMNS - col - 1)*2));
         ret = (short)(ret & 0b11);
         //Log.d("Value", "" + ret);
-        if(ret == PLAYER1_BIT)
-            return -1;
-        else if (ret == PLAYER2_BIT)
-            return 1;
-        else
-            return 0;
+
+        return ret;
     }
 
     public short[] getState(){
@@ -169,7 +165,7 @@ public class GameBoard {
 
         //We will try to minimize if the player is PLAYER 1, otherwise maximize
         //if the player is PLAYER 2 (PLAYER 2 is CPU in this case)
-        short bitPlayer = (player == -1) ? PLAYER1_BIT : PLAYER2_BIT;
+        short bitPlayer = player;
 
         int index = 3, r = lastMoveRow, c = lastMoveCol;
         short[] players = new short[7];
