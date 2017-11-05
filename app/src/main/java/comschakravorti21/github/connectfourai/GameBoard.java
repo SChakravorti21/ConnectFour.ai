@@ -69,11 +69,11 @@ public class GameBoard {
         buttons[row][col].setImageResource(res);
     }
 
-    public int getElement(int row, int col) {
+    public short getElement(int row, int col) {
         return getElement(row, col, gameState);
     }
 
-    public static int getElement(int row, int col, short[] gameState) {
+    public static short getElement(int row, int col, short[] gameState) {
         short data = gameState[row];
         //Log.d("Data", "" + data);
         short ret = (short)(data >> (short)((GameBoard.COLUMNS - col - 1)*2));

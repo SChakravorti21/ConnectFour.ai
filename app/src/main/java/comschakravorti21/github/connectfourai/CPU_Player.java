@@ -40,9 +40,9 @@ public class CPU_Player {
         short[] gameState = node.getGameState();
 
         for(int c = 0; c < GameBoard.COLUMNS; c++){
-            int value = GameBoard.getElement(0, c, gameState);
+            short value = GameBoard.getElement(0, c, gameState);
 
-            if(value == 0){
+            if(value == 00){
 
                 int r = rowIfPlaced(c);
 
