@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     public GameBoard gameBoard;
     private int scoreP1, scoreP2;
     public CPU_Player CPU;
-    public MediaPlayer mPlayer;
+    public MediaPlayer mPlayer, songPlayer;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -51,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        songPlayer.stop();
+        songPlayer.release();
+
+    }
+
+    public void onResume(){
+        super.onResume();
+        songPlayer.start();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -66,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
         CPU = new CPU_Player(gameBoard.getState());
         CPU.initTree();
+
+        songPlayer = MediaPlayer.create(getApplicationContext(), R.raw.connect4);
+
+        songPlayer.start();
 
         //creates a media player
         mPlayer = MediaPlayer.create(MainActivity.this, R.raw.clack);
