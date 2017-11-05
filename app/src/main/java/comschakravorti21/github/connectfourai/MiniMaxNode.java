@@ -55,6 +55,10 @@ public class MiniMaxNode {
         children.add(node);
     }
 
+    public void setChildren(ArrayList<MiniMaxNode> children) {
+        this.children = children;
+    }
+
     public short[] getGameState() {
         return gameState;
     }

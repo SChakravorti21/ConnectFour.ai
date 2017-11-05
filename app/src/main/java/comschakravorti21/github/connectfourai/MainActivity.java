@@ -97,11 +97,6 @@ public class MainActivity extends AppCompatActivity {
                                 TextView scoreView = (TextView)findViewById(R.id.score_P1);
                                 scoreView.setText("" + scoreP1);
                             }
-//                            else {
-//                                scoreP2++;
-//                                TextView scoreView = (TextView)findViewById(R.id.score_P2);
-//                                scoreView.setText("" + scoreP2);
-//                            }
 
                             gameBoard.resetBoard();
 
@@ -122,7 +117,11 @@ public class MainActivity extends AppCompatActivity {
                 int c = CPU.computeBestMove(); //gets the columns corresponding to the best move
                 int r = CPU_Player.rowIfPlaced(c, gameBoard.getState());
                 Log.d("Coords", "Row: " + r + ", Col: " + c);
+                while (r == -1)
+                    r = CPU_Player.rowIfPlaced((int)(Math.random()*7), gameBoard.getState());
+
                 gameBoard.placePiece(r, c, player); //place the piece, change the color
+
 
                 if(gameBoard.checkWin(r, c, player)) {
                     //Log.d("Check Win", "TRUE");

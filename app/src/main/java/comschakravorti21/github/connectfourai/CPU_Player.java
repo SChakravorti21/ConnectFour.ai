@@ -100,9 +100,9 @@ public class CPU_Player {
         }
 
         for(int i = 0; i < vals.length; i++) {
-            if(!maximizing && vals[i] > vals[bestColumn]) {
+            if(maximizing && vals[i] > vals[bestColumn]) {
                 bestColumn = i;
-            } else if(maximizing && vals[i] < vals[bestColumn]) {
+            } else if(!maximizing && vals[i] < vals[bestColumn]) {
                 bestColumn = i;
             }
         }
@@ -117,13 +117,15 @@ public class CPU_Player {
             Log.d("Value", "row: " + row + ", col: " + col + ", val: " + val);
 
             if( val == player) {
+                root.setChildren(null);
                 Log.d("Shifting root", "TRUE");
                 root = child;
+
+                //call replenish method
+                replenishTree(root, player);
                 return;
             }
         }
-
-        //call replenish method
     }
 
     public void replenishTree(MiniMaxNode node, short player) {
@@ -133,7 +135,8 @@ public class CPU_Player {
         short newPlayer = (player == MainActivity.PLAYER_1) ? MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
 
         //if no children, we must add a bunch of new children here.
-        if(children == null){
+        if(children == null || children.size() == 0){
+            //Log.d("Reached End", "Found leaf node");
             short[] gameState = Arrays.copyOf(node.getGameState(), 7);
 
             for(int c = 0; c < GameBoard.COLUMNS; c++){
