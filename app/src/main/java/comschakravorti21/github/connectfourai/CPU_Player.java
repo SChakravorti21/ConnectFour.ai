@@ -32,6 +32,7 @@ public class CPU_Player {
         //for loop find empty col, make nodes fo each empty column
         initTree(root, MainActivity.PLAYER_1, 0);
 
+        GameBoard.printbool = true;
     }
 
     public void initTree(MiniMaxNode node, short playerNum, int currentDepth){
@@ -39,23 +40,22 @@ public class CPU_Player {
 
         short[] gameState = node.getGameState();
 
+        short newPlayer = ((playerNum & 0b11) == MainActivity.PLAYER_1) ? MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
+
         for(int c = 0; c < GameBoard.COLUMNS; c++){
-            short value = GameBoard.getElement(0, c, gameState);
+            //short value = GameBoard.getElement(0, c, gameState);
 
-            if(value == 00){
+            int r = rowIfPlaced(c, gameState);
+            if(r != -1){
 
-                int r = rowIfPlaced(c);
-
-                MiniMaxNode n = new MiniMaxNode(gameState, r, c, (short)~playerNum, node.getStaticValue());
-                n.setGameState(r, c, playerNum);
+                MiniMaxNode n = new MiniMaxNode(gameState, r, c, newPlayer, node.getStaticValue());
+                //n.setGameState(r, c, newPlayer);
                 node.addChild(n);
                 //Log.d("current depth",  " " + currentDepth );
 
                 if(currentDepth < DEPTH){
                     n.instantiateChildrenList();
-                    initTree(n, playerNum, currentDepth + 1);
-                } else {
-                    //Log.d("Static eval", "Static value: " + n.getStaticValue() );
+                    initTree(n, newPlayer, currentDepth + 1);
                 }
             }
         }
@@ -103,7 +103,10 @@ public class CPU_Player {
     public void shiftRoot(int row, int col, short player) {
         //Check children and reset root once we find the corresponding player
         for (MiniMaxNode child: root.getChildren()) {
-            if(GameBoard.getElement(row, col, child.getGameState()) == player) {
+            short val = GameBoard.getElement(row, col, child.getGameState());
+            Log.d("Value", "row: " + row + ", col: " + col + ", val: " + val);
+
+            if( val == player) {
                 Log.d("Shifting root", "TRUE");
                 root = child;
                 return;

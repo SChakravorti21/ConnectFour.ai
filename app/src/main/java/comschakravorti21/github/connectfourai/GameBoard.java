@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 public class GameBoard {
 
+    public static boolean printbool = false;
     public static final int ROWS = 6;
     public static final int COLUMNS = 7;
     public static final short PLAYER1_BIT = 0b01;
@@ -73,12 +74,21 @@ public class GameBoard {
         return getElement(row, col, gameState);
     }
 
+    public static void print(String msg){
+        if(printbool){
+            Log.d("print", msg);
+        }
+    }
+
     public static short getElement(int row, int col, short[] gameState) {
         short data = gameState[row];
         //Log.d("Data", "" + data);
         short ret = (short)(data >> (short)((GameBoard.COLUMNS - col - 1)*2));
         ret = (short)(ret & 0b11);
-        //Log.d("Value", "" + ret);
+        //Log.d("Value in getElement", "" + ret);
+
+        print("data: " + data);
+        //print("ret: " + ret);
 
         return ret;
     }

@@ -1,5 +1,7 @@
 package comschakravorti21.github.connectfourai;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -17,6 +19,8 @@ public class MiniMaxNode {
     public MiniMaxNode(){
         children = new ArrayList<>(7);
         gameState = new short[6];
+        staticValue = 0;
+        //Log.d("Root", "" + gameState[0]);
     }
 
     public MiniMaxNode(short[] prevGameState, short staticValue){
@@ -26,8 +30,8 @@ public class MiniMaxNode {
     }
 
     public MiniMaxNode(short[] prevGameState, int r, int c, short currentPlayerNum, short staticValue){
+        GameBoard.placePiece(r, c, prevGameState, currentPlayerNum);
         this.gameState = prevGameState;
-        GameBoard.placePiece(r, c, gameState, currentPlayerNum);
 
         this.staticValue = staticValue;
         this.staticValue = GameBoard.staticEval(gameState, r, c, currentPlayerNum, staticValue);
