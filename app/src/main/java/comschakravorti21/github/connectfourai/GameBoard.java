@@ -53,11 +53,12 @@ public class GameBoard {
         short data = gameState[row];
         //Create the player position and shift it by the necessary number of columns
         //00 is empty, 01 is player 1, 10 is player 2
-        short bitPlayer = (playerNum == PLAYER1_BIT) ? (short)(PLAYER1_BIT << (short)((COLUMNS - col - 1)*2))
-                : (short)(PLAYER2_BIT << (short)((COLUMNS - col - 1)*2));
+        short bitPlayer = (playerNum == MainActivity.PLAYER_1) ? (short)(MainActivity.PLAYER_1 << (short)((COLUMNS - col - 1)*2))
+                : (short)(MainActivity.PLAYER_2 << (short)((COLUMNS - col - 1)*2));
 
         //Use OR operator to insert piece, then reset piece in array
         short newRow = (short)(data | bitPlayer);
+        //Log.d("New rows", "" + newRow);
         gameState[row] = newRow;
     }
 
@@ -76,7 +77,7 @@ public class GameBoard {
 
     public static void print(String msg){
         if(printbool){
-            Log.d("print", msg);
+            //Log.d("print", msg);
         }
     }
 
@@ -87,7 +88,7 @@ public class GameBoard {
         ret = (short)(ret & 0b11);
         //Log.d("Value in getElement", "" + ret);
 
-        print("data: " + data);
+        //print("data: " + data);
         //print("ret: " + ret);
 
         return ret;

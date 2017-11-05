@@ -3,6 +3,7 @@ package comschakravorti21.github.connectfourai;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Athu on 11/4/2017.
@@ -13,38 +14,30 @@ public class MiniMaxNode {
     private ArrayList<MiniMaxNode> children;
     private short[] gameState;
     private short staticValue;
-    private boolean isMax;
+    //private boolean isMax;
 
     //Only used for root
     public MiniMaxNode(){
         children = new ArrayList<>(7);
         gameState = new short[6];
         staticValue = 0;
-        //Log.d("Root", "" + gameState[0]);
     }
 
     public MiniMaxNode(short[] prevGameState, short staticValue){
-        this.gameState = prevGameState;
+        this.gameState = Arrays.copyOf(prevGameState, prevGameState.length);
         this.staticValue = staticValue;
-        //children = new ArrayList<>(7);
+        children = null;
     }
 
     public MiniMaxNode(short[] prevGameState, int r, int c, short currentPlayerNum, short staticValue){
-        GameBoard.placePiece(r, c, prevGameState, currentPlayerNum);
-        this.gameState = prevGameState;
+        this.gameState = Arrays.copyOf(prevGameState, prevGameState.length);
+        GameBoard.placePiece(r, c, gameState, currentPlayerNum);
         //Log.d("Something", "" + gameState[r]);
 
         this.staticValue = staticValue;
         this.staticValue = GameBoard.staticEval(gameState, r, c, currentPlayerNum, staticValue);
 
-        //children = new ArrayList<>(7);
-    }
-
-    //Using this method to guarantee that only inner nodes have children.
-    //This way, we can easily tell when a node is a leaf node ––
-    //if node.getChildren() == null
-    public void instantiateChildrenList() {
-        children = new ArrayList<MiniMaxNode>(); //Not specifying size bc number of children can vary
+        children = null;
     }
 
     public ArrayList<MiniMaxNode> getChildren() {

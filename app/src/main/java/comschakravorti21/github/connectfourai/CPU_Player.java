@@ -3,6 +3,7 @@ package comschakravorti21.github.connectfourai;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Athu on 11/4/2017.
@@ -13,7 +14,7 @@ public class CPU_Player {
     public MiniMaxNode root;
     private int difficulty;
     private short[] gameState;
-    private final int DEPTH = 6;
+    private static final int DEPTH = 6;
 
     public CPU_Player(short[] gameS){
         this.root = new MiniMaxNode();
@@ -42,19 +43,23 @@ public class CPU_Player {
 
         short newPlayer = (playerNum == MainActivity.PLAYER_1) ? MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
 
+        //Log.d("BEFORE INSERTS Rows", "depth " + currentDepth + ": " + Arrays.toString(gameState));
+
         for(int c = 0; c < GameBoard.COLUMNS; c++){
             short value = GameBoard.getElement(0, c, gameState);
 
             int r = rowIfPlaced(c, gameState);
 
-            //if(r != -1){
-
             MiniMaxNode n = null;
-            if(value == 0) {
 
+            if(r != -1) {
+                //Log.d("Thing", "row " + r + ", depth " + currentDepth);
+                //Log.d("Rows", "" + Arrays.toString(gameState));
                 n = new MiniMaxNode(gameState, r, c, newPlayer, node.getStaticValue());
                 node.addChild(n);
-
+            } else {
+                //Log.d("unable to add child", "row " + r + ", depth " + currentDepth);
+                //Log.d("Rows", "" + Arrays.toString(gameState));
             }
 
             if(n != null && currentDepth < DEPTH) {
@@ -62,7 +67,8 @@ public class CPU_Player {
             }
         }
 
-        Log.d("Num Children", "" + node.getChildren().size() + ", depth" + currentDepth);
+        //Log.d("AFTER INSERT Num Child", "" + node.getChildren().size() + ", depth" + currentDepth + "\n\n");
+        //Log.d("Rows", "" + Arrays.toString(gameState));
     }
 
     //No argument method
