@@ -71,8 +71,10 @@ public class CPU_Player {
             return 0;
 
         ArrayList<MiniMaxNode> children = node.getChildren();
-        if(children == null)
+        if(children == null) {
+            Log.d("Leaf Node", "Reached end of tree");
             return node.getStaticValue();
+        }
 
         int bestColumn = 0;
         int[] vals = new int[children.size()];
@@ -83,7 +85,7 @@ public class CPU_Player {
         for(int i = 0; i < vals.length; i++) {
             if(maximizing && vals[i] > vals[bestColumn]) {
                 bestColumn = i;
-            } else if(vals[i] < vals[bestColumn]) {
+            } else if(!maximizing && vals[i] < vals[bestColumn]) {
                 bestColumn = i;
             }
         }
