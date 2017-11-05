@@ -21,7 +21,7 @@ public class MiniMaxNode {
     public MiniMaxNode(short[] prevGameState, short staticValue){
         this.gamestate = prevGameState;
         this.staticValue = staticValue;
-        children = new ArrayList<>(7);
+        //children = new ArrayList<>(7);
     }
 
     public MiniMaxNode(short[] prevGameState, int r, int c, short currentPlayerNum, short staticValue){
@@ -31,7 +31,18 @@ public class MiniMaxNode {
         this.staticValue = staticValue;
         this.staticValue = GameBoard.staticEval(gamestate, r, c, currentPlayerNum, staticValue);
 
-        children = new ArrayList<>(7);
+        //children = new ArrayList<>(7);
+    }
+
+    //Using this method to guarantee that only inner nodes have children.
+    //This way, we can easily tell when a node is a leaf node ––
+    //if node.getChildren() == null
+    public void instantiateChildrenList() {
+        children = new ArrayList<>(); //Not specifying size bc number of children can vary
+    }
+
+    public ArrayList<MiniMaxNode> getChildren() {
+        return children;
     }
 
     public short getStaticValue() {

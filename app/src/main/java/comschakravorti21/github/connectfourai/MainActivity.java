@@ -15,15 +15,15 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final byte PLAYER_1 = -1;
-    public static final byte PLAYER_2 = 1;
+    public static final short PLAYER_1 = -1;
+    public static final short PLAYER_2 = 1;
     //public static final byte CPU = 3;
 
     private Toolbar toolbar;
     private GridLayout gridBoard;
     //private short[] pieces;
     //private byte[][] pieces;
-    private byte player;
+    private short player;
     public GameBoard gameboard;
     private int scoreP1, scoreP2;
     public CPU_Player cpu;
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 //plays mp3 file when piece is placed
                 mPlayer.start();
 
+
                 //Start from bottom when searching where to insert piece
                 for(int i = GameBoard.ROWS - 1; i >= 0; i--) {
                     //Place the piece if its empty
@@ -96,21 +97,49 @@ public class MainActivity extends AppCompatActivity {
                                 scoreP1++;
                                 TextView scoreView = (TextView)findViewById(R.id.score_P1);
                                 scoreView.setText("" + scoreP1);
-                            } else {
-                                scoreP2++;
-                                TextView scoreView = (TextView)findViewById(R.id.score_P2);
-                                scoreView.setText("" + scoreP2);
                             }
+//                            else {
+//                                scoreP2++;
+//                                TextView scoreView = (TextView)findViewById(R.id.score_P2);
+//                                scoreView.setText("" + scoreP2);
+//                            }
 
                             gameboard.resetBoard();
+
+                            //Need to reset tree
                         } else{
                             //Log.d("Check Win", "FALSE");
+
+                            //Otherwise move down tree and extend tree by 1 level
                         }
 
-                        player = (byte)(-1 *player);
+                        player = (short)~player;
                         break;
                     }
                 }
+
+                //After the user plays, we want the CPU to play
+                int c = cpu.computeBestMove(); //gets the columns corresponding to the best move
+                int r = CPU_Player.rowIfPlaced(c, gameboard.getState());
+                gameboard.placePiece(r, c, player); //place the piece, change the color
+
+                if(gameboard.checkWin(r, col, player)) {
+                    //Log.d("Check Win", "TRUE");
+                    scoreP2++;
+                    TextView scoreView = (TextView)findViewById(R.id.score_P2);
+                    scoreView.setText("" + scoreP2);
+
+                    gameboard.resetBoard();
+
+                    //Need to reset game tree
+                } else{
+                    //Log.d("Check Win", "FALSE");
+
+                    //Need to move down game tree by 1 and extend tree by 1
+                }
+
+
+                player = (short)~player;
             }
         };
 

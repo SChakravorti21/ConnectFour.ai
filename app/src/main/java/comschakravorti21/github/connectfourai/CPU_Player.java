@@ -2,6 +2,8 @@ package comschakravorti21.github.connectfourai;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by Athu on 11/4/2017.
  */
@@ -43,12 +45,50 @@ public class CPU_Player {
                 //Log.d("current depth",  " " + currentDepth );
 
                 if(currentDepth < DEPTH){
+                    n.instantiateChildrenList();
                     initTree(n, (playerNum == -1) ? GameBoard.PLAYER1_BIT : GameBoard.PLAYER2_BIT, currentDepth + 1);
                 } else {
-                    Log.d("Static eval", "Static value: " + n.getStaticValue() );
+                    //Log.d("Static eval", "Static value: " + n.getStaticValue() );
                 }
             }
         }
+    }
+
+    //No argument method
+    public int computeBestMove() {
+        //This method also needs to call the static version of the placePiece method
+        //in order to alter the board.
+
+        //maximizing is false b/c trying to minimize human's score
+        int bestCol = computeBestMove(root, false); //CPU tries to minimize human's score
+
+        return bestCol;
+    }
+
+    //recursive method
+    public int computeBestMove(MiniMaxNode node, boolean maximizing) {
+        if(node == null) //safety null check, as such should not have to take place
+            return 0;
+
+        ArrayList<MiniMaxNode> children = node.getChildren();
+        if(children == null)
+            return node.getStaticValue();
+
+        int bestColumn = 0;
+        int[] vals = new int[children.size()];
+        for(int i = 0; i < vals.length; i++) {
+            vals[i] = computeBestMove(children.get(i), !maximizing);
+        }
+
+        for(int i = 0; i < vals.length; i++) {
+            if(maximizing && vals[i] > vals[bestColumn]) {
+                bestColumn = i;
+            } else if(vals[i] < vals[bestColumn]) {
+                bestColumn = i;
+            }
+        }
+
+        return bestColumn;
     }
 
     public static int rowIfPlaced(int col, short[] gameState) {

@@ -32,20 +32,17 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
         android:text="0"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="72sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.705"
+        app:layout_constraintBottom_toTopOf="@+id/board"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintLeft_toRightOf="@+id/score_P1"
         app:layout_constraintRight_toLeftOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/board"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.631" />
 
     <GridLayout
         android:id="@+id/board"
@@ -54,395 +51,393 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="200dp"
+        android:background="#3486FF"
         android:columnCount="7"
         android:rowCount="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="#3486FF"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="11"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="11" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="12"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="12" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="13"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="13" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="14"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="14" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="15"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="15" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="16"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="16" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="17"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="17" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="21"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="21" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="22"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="22" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="23"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="23" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="24"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="24" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="25"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="25" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="26"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="26" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="27"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="27" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="31"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="31" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="32"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="32" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="33"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="33" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="34"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="34" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="35"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="35" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="36"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="36" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="37"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="37" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="41"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="41" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="42"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="42" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="43"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="43" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="44"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="44" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="45"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="45" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="46"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="46" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="47"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="47" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="51"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="51" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="52"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="52" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="53"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="53" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="54"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="54" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="55"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="55" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="56"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="56" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="57"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="57" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="61"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="61" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="62"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="62" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="63"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="63" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="64"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="64" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="65"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="65" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="66"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="66" />
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:tag="67"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:scaleType="fitCenter"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tag="67" />
 
     </GridLayout>
 
@@ -452,18 +447,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="Player 1"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/board"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.595"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.041" />
 
     <TextView
         android:id="@+id/textView2"
@@ -477,16 +467,15 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/board"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.595"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.041" />
 
     <TextView
         android:id="@+id/score_P1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginLeft="28dp"
         android:text="0"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -495,6 +484,6 @@
         app:layout_constraintBottom_toTopOf="@+id/board"
         app:layout_constraintLeft_toRightOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.605" />
 
 </android.support.constraint.ConstraintLayout>
