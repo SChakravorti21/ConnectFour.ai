@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final short PLAYER_1 = -1;
-    public static final short PLAYER_2 = 1;
+    public static final short PLAYER_1 = 0b01;
+    public static final short PLAYER_2 = 0b10;
     //public static final byte CPU = 3;
 
     private Toolbar toolbar;
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                             //Otherwise move down tree and extend tree by 1 level
                         }
 
-                        player = (short)~player;
+                        player = PLAYER_2;
                         break;
                     }
                 }
@@ -121,9 +121,10 @@ public class MainActivity extends AppCompatActivity {
                 //After the user plays, we want the CPU to play
                 int c = cpu.computeBestMove(); //gets the columns corresponding to the best move
                 int r = CPU_Player.rowIfPlaced(c, gameboard.getState());
+                Log.d("Coords", "Row: " + r + ", Col: " + c);
                 gameboard.placePiece(r, c, player); //place the piece, change the color
 
-                if(gameboard.checkWin(r, col, player)) {
+                if(gameboard.checkWin(r, c, player)) {
                     //Log.d("Check Win", "TRUE");
                     scoreP2++;
                     TextView scoreView = (TextView)findViewById(R.id.score_P2);
@@ -138,8 +139,7 @@ public class MainActivity extends AppCompatActivity {
                     //Need to move down game tree by 1 and extend tree by 1
                 }
 
-
-                player = (short)~player;
+                player = PLAYER_1;
             }
         };
 

@@ -34,9 +34,9 @@ public class GameBoard {
 
     //returns row that it was placed in
     //@param playerNum, 1 if player 1,     -1 if player 2
-    public int placePiece(int row, int col, int playerNum) {
+    public int placePiece(int row, int col, short playerNum) {
         //gameState[row][col] = playerNum;
-        placePiece(row, col, gameState, (playerNum == -1) ? PLAYER1_BIT : PLAYER2_BIT);
+        placePiece(row, col, gameState, playerNum);
 
         if(playerNum == MainActivity.PLAYER_1) {
             this.changePieceColor(row, col, R.mipmap.piece_yellow);

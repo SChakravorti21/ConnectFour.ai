@@ -72,7 +72,7 @@ public class CPU_Player {
 
         ArrayList<MiniMaxNode> children = node.getChildren();
         if(children == null) {
-            Log.d("Leaf Node", "Reached end of tree");
+            //Log.d("Leaf Node", "Reached end of tree");
             return node.getStaticValue();
         }
 
@@ -101,7 +101,10 @@ public class CPU_Player {
 
             short data = gameState[i];
 
-            if( ((data >> c) & zero) == 0){
+
+            if( ((data >> c) & zero) == 0b00){
+                //Log.d("Data", "" + data );
+                //Log.d("Value", "" + ((data >> c) & zero));
                 return i;
             }
         }
