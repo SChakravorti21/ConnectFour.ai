@@ -312,26 +312,6 @@ public class GameBoard {
         return ret;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static short staticEval(short[] gameStateCopy, int lastMoveRow, int lastMoveCol,
                                    short runningEval, short player) {
 
