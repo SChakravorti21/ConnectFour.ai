@@ -1,5 +1,9 @@
 package comschakravorti21.github.connectfourai.try2;
 
+import android.util.Log;
+
+import java.util.Arrays;
+
 import comschakravorti21.github.connectfourai.MainActivity;
 
 /**
@@ -13,15 +17,15 @@ public class CPUPlayer {
 
     public int minimax(int[][] currentState, int player) {
         int ret = (int)(Math.random()*7);
-        double eval = 0;
+        double eval;
         double highestEval = 0;
 
         for(int i = 0; i < Gameboard2.COLUMNS; i++) {
             int row = Gameboard2.rowIfPlaced(i, currentState);
             if(row != -1) {
-                currentState[row][i] = player;
-                eval = minimaxRec(currentState, player, true, 1);
-
+                //currentState[row][i] = MainActivity2.PLAYER_2;
+                eval = minimaxRec(currentState, MainActivity2.PLAYER_2, true, 1);
+                Log.d("EVAL", "" + eval);
                 if(eval > highestEval) {
                     highestEval = eval;
                     ret = i;
@@ -47,13 +51,17 @@ public class CPUPlayer {
 
         if(maximizing) {
             //int highestEvalCol = (int)Math.random()*7; //pick random column as default
-            double highestEval = 0;
+            double highestEval = Integer.MIN_VALUE;
 
             for(int i = 0; i < Gameboard2.COLUMNS; i++) {
                 int row = Gameboard2.rowIfPlaced(i, currentState);
                 if(row != -1) {
                     currentState[row][i] = player;
                     eval = minimaxRec(currentState, newPlayer, !maximizing, depth+1);
+                    if(depth == 1) {
+                        Log.d("EVAL depth 1", "" + eval);
+                        Log.d("Current state", Arrays.deepToString(currentState));
+                    }
 
                     if(eval > highestEval) {
                         highestEval = eval;
@@ -66,13 +74,18 @@ public class CPUPlayer {
             bestResult = highestEval;
         } else {
             //int highestEvalCol = (int)Math.random()*7; //pick random column as default
-            double lowestEval = 0;
+            double lowestEval = Integer.MAX_VALUE;
 
             for(int i = 0; i < Gameboard2.COLUMNS; i++) {
                 int row = Gameboard2.rowIfPlaced(i, currentState);
                 if(row != -1) {
                     currentState[row][i] = player;
                     eval = minimaxRec(currentState, newPlayer, !maximizing, depth+1);
+
+//                    if(depth == 2) {
+//                        Log.d("EVAL depth 2", "" + eval);
+//                        Log.d("Current state", Arrays.deepToString(currentState));
+//                    }
 
                     if(eval < lowestEval) {
                         lowestEval = eval;
@@ -95,7 +108,7 @@ public class CPUPlayer {
         //If we are evaluating for human player (PLAYER_1), then we'll
         //multiply the eval by -1 (minimizing human player score), otherwise
         //leave score unaltered
-        int multiplier = (player == MainActivity2.PLAYER_1) ? -1 : 1;
+        int multiplier = (player == MainActivity2.PLAYER_1) ? 1 : 1; //-1 : 1
         double ret = 0;
         int maxInRow = 0;
 

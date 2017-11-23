@@ -92,68 +92,6 @@ public class MainActivity2 extends AppCompatActivity {
 
 
     private class ButtonClickListener implements View.OnClickListener {
-        Executor executor;
-        Runnable run;
-
-        public ButtonClickListener() {
-            executor = new Executor() {
-                @Override
-                public void execute(@NonNull Runnable runnable) {
-                    new Thread(runnable).start();
-                }
-            };
-
-            run = new Runnable() {
-                @Override
-                public void run() {
-                    final int bestCol = cpu.minimax(gameboard.getBoard(), player); //get the best move for CPU
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    });
-
-                    final int row = Gameboard2.rowIfPlaced(bestCol, gameboard.getBoard());
-                    if(row != -1) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Idk why this doesn't work when param is just "player"
-                                gameboard.placePiece(row, bestCol, PLAYER_2);
-                            }
-                        });
-
-                        Log.d("Static eval for player " + player,
-                                "" + cpu.staticEval(gameboard.getBoard(), player));
-
-                        if(Gameboard2.checkWin(row, bestCol, gameboard.getBoard(), player)) {
-                            Log.d("Check Win", "TRUE");
-                            if(player == PLAYER_1) {
-                                scoreP1++;
-                                TextView scoreView = (TextView)findViewById(R.id.score_P1);
-                                scoreView.setText("" + scoreP1);
-                            } else {
-                                scoreP2++;
-                                TextView scoreView = (TextView)findViewById(R.id.score_P2);
-                                scoreView.setText("" + scoreP2);
-                            }
-
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    gameboard.resetBoard();
-                                }
-                            });
-                        }
-                    }
-
-                    player = PLAYER_1; //Swap player
-                    waitingForGeneration = false; //Move generation is complete, user can play again
-                }
-            };
-        }
-
         @Override
         public void onClick(View view) {
             if(waitingForGeneration)
@@ -195,7 +133,35 @@ public class MainActivity2 extends AppCompatActivity {
 
             //Set the progress bar to be visible to prevent it from  looking like UI freeze
             progressBar.setVisibility(View.VISIBLE);
-            executor.execute(run);
+            int bestCol = cpu.minimax(gameboard.getBoard(), player); //get the best move for CPU
+            progressBar.setVisibility(View.GONE);
+            row = Gameboard2.rowIfPlaced(bestCol, gameboard.getBoard());
+
+            if (row != -1) {
+                //Idk why this doesn't work when param is just "player"
+                gameboard.placePiece(row, bestCol, PLAYER_2);
+
+                Log.d("Static eval for player " + player,
+                        "" + cpu.staticEval(gameboard.getBoard(), player));
+
+                if (Gameboard2.checkWin(row, bestCol, gameboard.getBoard(), player)) {
+                    Log.d("Check Win", "TRUE");
+                    if (player == PLAYER_1) {
+                        scoreP1++;
+                        TextView scoreView = (TextView) findViewById(R.id.score_P1);
+                        scoreView.setText("" + scoreP1);
+                    } else {
+                        scoreP2++;
+                        TextView scoreView = (TextView) findViewById(R.id.score_P2);
+                        scoreView.setText("" + scoreP2);
+                    }
+
+                    gameboard.resetBoard();
+                }
+            }
+
+            player = PLAYER_1; //Swap player
+            waitingForGeneration =false; //Move generation is complete, user can play again
         }
     }
 }
