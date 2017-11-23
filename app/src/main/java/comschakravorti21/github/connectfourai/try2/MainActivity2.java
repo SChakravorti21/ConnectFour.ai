@@ -15,8 +15,8 @@ import comschakravorti21.github.connectfourai.R;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    public static final int PLAYER_1 = -1;
-    public static final int PLAYER_2 = 1;
+    public static final int PLAYER_1 = 1;
+    public static final int PLAYER_2 = 2;
     public static final int CPU = 3;
 
     private Toolbar toolbar;
@@ -108,8 +108,6 @@ public class MainActivity2 extends AppCompatActivity {
                     }
 
                     gameboard.resetBoard();
-                } else{
-                    Log.d("Check Win", "FALSE");
                 }
 
                 player = (player == PLAYER_1) ? PLAYER_2 : PLAYER_1;
