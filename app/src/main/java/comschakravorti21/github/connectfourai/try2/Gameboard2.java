@@ -51,6 +51,18 @@ public class Gameboard2 {
         return row;
     }
 
+    public boolean isFull() {
+        //If there are no possible moves, the board is full
+        return (possibleMoves(this.gameState).isEmpty());
+    }
+
+    public void clear() {
+        int[] emptyRow = new int[COLUMNS];
+        for(int i = 0; i < gameState.length; i++) {
+            gameState[i] = emptyRow;
+        }
+    }
+
     public static int rowIfPlaced(int col, int[][] gameState) {
         for(int i = gameState.length - 1; i >= 0; i--) {
             if(gameState[i][col] == 0) {

@@ -24,11 +24,13 @@ public class CPUPlayer {
     public static final int[] dy = {-1, -1, 0, 1, 1, 1, 0, -1};
 
     public int generateMove(int[][] currentState) {
-        int[] bestMove = maximizePlay(currentState, 1, MainActivity2.PLAYER_2);
+        int[] bestMove = maximizePlay(currentState, 1, MainActivity2.PLAYER_2,
+                Integer.MIN_VALUE, Integer.MAX_VALUE);
+
         return bestMove[0];
     }
 
-    public int[] maximizePlay(int[][] currentState, int depth, int player) {
+    public int[] maximizePlay(int[][] currentState, int depth, int player, int alpha, int beta) {
         int[] ret = new int[]{-1, Integer.MIN_VALUE};
 
         if(depth == MAX_DEPTH) {
@@ -40,18 +42,17 @@ public class CPUPlayer {
                 MainActivity2.PLAYER_2 : MainActivity2.PLAYER_1;
 
         for(Integer[] move : Gameboard2.possibleMoves(currentState)) {
-            //Log.d("Move", Arrays.toString(move));
             int[][] newState = Gameboard2.deepCopyState(currentState);
             int row = move[0];
             int col = move[1];
             newState[row][col] = player;
             if(Gameboard2.checkWin(row, col, newState, player)) {
                 ret[0] = col;
-                ret[1]= 100000;
+                ret[1]= 1000000;
                 break;
             }
 
-            int[] minimizedPlay = minimizePlay(newState, depth+1, otherPlayer);
+            int[] minimizedPlay = minimizePlay(newState, depth+1, otherPlayer, alpha, beta);
 
             if(minimizedPlay[1] > ret[1] || ret[0] == -1) {
                 ret[0] = move[1];
@@ -62,7 +63,7 @@ public class CPUPlayer {
         return ret;
     }
 
-    public int[] minimizePlay(int[][] currentState, int depth, int player) {
+    public int[] minimizePlay(int[][] currentState, int depth, int player, int alpha, int beta) {
         int[] ret = new int[]{-1, Integer.MAX_VALUE};
 
         if(depth == MAX_DEPTH) {
@@ -80,20 +81,11 @@ public class CPUPlayer {
             newState[row][col] = player;
             if(Gameboard2.checkWin(row, col, newState, player)) {
                 ret[0] = col;
-                ret[1]= -100000;
+                ret[1]= -1000000; //Fix to positive 100000?
                 break;
             }
 
-            int[] maximizedPlay = maximizePlay(newState, depth+1, otherPlayer);
-
-            /*
-            if(depth == 2) {
-                Log.d("Eval Depth 2", "" + betterStaticEval(newState, player));
-                for(int[] currRow : newState) {
-                    Log.d("State", Arrays.toString(currRow));
-                }
-            }
-            */
+            int[] maximizedPlay = maximizePlay(newState, depth+1, otherPlayer, alpha, beta);
 
             if(maximizedPlay[1] < ret[1] || ret[0] == -1) {
                 ret[0] = move[1];
@@ -112,10 +104,8 @@ public class CPUPlayer {
         for(int row = 0; row < allUtilities.length; row++) {
             for(int col = 0; col < allUtilities[row].length; col++) {
                 if(currentState[row][col] == player) {
-                    //If we're trying to maximize, reward higher scores
                     sum += allUtilities[row][col];
                 } else if(currentState[row][col] == otherPlayer) {
-                    //If we're trying to minimize, penalize higher opponent scores
                     sum -= allUtilities[row][col];
                 }
             }

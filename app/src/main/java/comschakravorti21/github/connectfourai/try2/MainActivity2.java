@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.GenericArrayType;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.Executor;
 
 import comschakravorti21.github.connectfourai.R;
@@ -28,12 +29,10 @@ public class MainActivity2 extends AppCompatActivity {
     private Toolbar toolbar;
     private ProgressBar progressBar;
     private GridLayout gridBoard;
-    //private int[][] pieces;
     private int player;
-    public Gameboard2 gameboard;
+    private Gameboard2 gameboard;
     private int scoreP1, scoreP2;
     private CPUPlayer cpu;
-    boolean waitingForGeneration;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -71,7 +70,6 @@ public class MainActivity2 extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         gameboard = new Gameboard2();
-        waitingForGeneration = false;
 
         //No need to redefine the OnClickListener for every button, so we can just use the
         //same one
@@ -94,11 +92,8 @@ public class MainActivity2 extends AppCompatActivity {
     private class ButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            if(waitingForGeneration)
-                return;
 
             ImageButton button = (ImageButton)view;
-            waitingForGeneration = true;
 
             //Button tags were defined as Strings with "rowcol" information, so getting
             //the second character gives the column
@@ -108,9 +103,6 @@ public class MainActivity2 extends AppCompatActivity {
             int row = Gameboard2.rowIfPlaced(col, gameboard.getBoard());
             if(row != -1) {
                 gameboard.placePiece(row, col, player);
-
-//                Log.d("Static eval for player " + player,
-//                        "" + cpu.betterStaticEval(gameboard.getBoard(), player));
 
                 if(Gameboard2.checkWin(row, col, gameboard.getBoard(), player)) {
                     Log.d("Check Win", "TRUE");
@@ -131,21 +123,51 @@ public class MainActivity2 extends AppCompatActivity {
 
             player = PLAYER_2; //Swap player
 
-            //Set the progress bar to be visible to prevent it from  looking like UI freeze
-            progressBar.setVisibility(View.VISIBLE);
-            for(Integer[] move : Gameboard2.possibleMoves(gameboard.getBoard())) {
-                Log.d("Move", Arrays.toString(move));
+            //If the board fills up, clear it
+            if(gameboard.isFull()) {
+                gameboard.clear();
             }
 
-            int bestCol = cpu.generateMove(gameboard.getBoard()); //get the best move for CPU
-            progressBar.setVisibility(View.GONE);
+            MoveGenerator moveGenerator = new MoveGenerator();
+            moveGenerator.execute();
+
+        }
+    }
+
+    private class MoveGenerator extends AsyncTask<Void, Void, Void> {
+        private int row;
+        private int bestCol;
+
+        public MoveGenerator() {
+            row = -1;
+            bestCol = -1;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            long start = System.nanoTime();
+
+            bestCol = cpu.generateMove(gameboard.getBoard());
+
+            Log.d("Calculation time", "" + (System.nanoTime() - start)/1000000 + " milliseconds");
+
             row = Gameboard2.rowIfPlaced(bestCol, gameboard.getBoard());
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
 
             if (row != -1) {
                 gameboard.placePiece(row, bestCol, PLAYER_2);
-
-//                Log.d("Static eval for player " + player,
-//                        "" + cpu.betterStaticEval(gameboard.getBoard(), player));
 
                 if (Gameboard2.checkWin(row, bestCol, gameboard.getBoard(), player)) {
                     Log.d("Check Win", "TRUE");
@@ -164,7 +186,12 @@ public class MainActivity2 extends AppCompatActivity {
             }
 
             player = PLAYER_1; //Swap player
-            waitingForGeneration = false; //Move generation is complete, user can play again
+
+            if(gameboard.isFull()) {
+                gameboard.clear();
+            }
+
+            progressBar.setVisibility(View.GONE);
         }
     }
 }
