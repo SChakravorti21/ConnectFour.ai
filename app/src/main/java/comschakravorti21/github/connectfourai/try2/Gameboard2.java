@@ -76,7 +76,7 @@ public class Gameboard2 {
         if(currentState == null)
             return null;
 
-        int[][] ret = new int[currentState.length][];
+        int[][] ret = new int[currentState.length][currentState[0].length];
         for(int i = 0; i < currentState.length; i++) {
             ret[i] = Arrays.copyOf(currentState[i], currentState[i].length);
         }

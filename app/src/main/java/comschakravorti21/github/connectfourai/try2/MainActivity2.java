@@ -109,8 +109,8 @@ public class MainActivity2 extends AppCompatActivity {
             if(row != -1) {
                 gameboard.placePiece(row, col, player);
 
-                Log.d("Static eval for player " + player,
-                        "" + cpu.staticEval(gameboard.getBoard(), player));
+//                Log.d("Static eval for player " + player,
+//                        "" + cpu.betterStaticEval(gameboard.getBoard(), player));
 
                 if(Gameboard2.checkWin(row, col, gameboard.getBoard(), player)) {
                     Log.d("Check Win", "TRUE");
@@ -142,11 +142,10 @@ public class MainActivity2 extends AppCompatActivity {
             row = Gameboard2.rowIfPlaced(bestCol, gameboard.getBoard());
 
             if (row != -1) {
-                //Idk why this doesn't work when param is just "player"
                 gameboard.placePiece(row, bestCol, PLAYER_2);
 
-                Log.d("Static eval for player " + player,
-                        "" + cpu.staticEval(gameboard.getBoard(), player));
+//                Log.d("Static eval for player " + player,
+//                        "" + cpu.betterStaticEval(gameboard.getBoard(), player));
 
                 if (Gameboard2.checkWin(row, bestCol, gameboard.getBoard(), player)) {
                     Log.d("Check Win", "TRUE");
@@ -165,7 +164,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
 
             player = PLAYER_1; //Swap player
-            waitingForGeneration =false; //Move generation is complete, user can play again
+            waitingForGeneration = false; //Move generation is complete, user can play again
         }
     }
 }

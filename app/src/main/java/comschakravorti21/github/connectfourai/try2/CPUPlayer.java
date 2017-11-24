@@ -13,7 +13,15 @@ import comschakravorti21.github.connectfourai.MainActivity;
 
 public class CPUPlayer {
 
-    public static final int MAX_DEPTH = 7;
+    private static final int MAX_DEPTH = 7;
+    private static final int[][] allUtilities = new int[][]{{3, 4, 5, 7, 5, 4, 3},
+                                                            {4, 6, 8, 10, 8, 6, 4},
+                                                            {5, 8, 11, 13, 11, 8, 5},
+                                                            {5, 8, 11, 13, 11, 8, 5},
+                                                            {4, 6, 8, 10, 8, 6, 4},
+                                                            {3, 4, 5, 7, 5, 4, 3}};
+    public static final int[] dx = {0, 1, 1, 1, 0, -1, -1, -1};
+    public static final int[] dy = {-1, -1, 0, 1, 1, 1, 0, -1};
 
     public int generateMove(int[][] currentState) {
         int[] bestMove = maximizePlay(currentState, 1, MainActivity2.PLAYER_2);
@@ -24,7 +32,7 @@ public class CPUPlayer {
         int[] ret = new int[]{-1, Integer.MIN_VALUE};
 
         if(depth == MAX_DEPTH) {
-            ret[1] = (int)staticEval(currentState, player);
+            ret[1] = (int)betterStaticEval(currentState, player);
             return ret;
         }
 
@@ -34,10 +42,18 @@ public class CPUPlayer {
         for(Integer[] move : Gameboard2.possibleMoves(currentState)) {
             //Log.d("Move", Arrays.toString(move));
             int[][] newState = Gameboard2.deepCopyState(currentState);
-            newState[move[0]][move[1]] = player;
+            int row = move[0];
+            int col = move[1];
+            newState[row][col] = player;
+            if(Gameboard2.checkWin(row, col, newState, player)) {
+                ret[0] = col;
+                ret[1]= 100000;
+                break;
+            }
 
-            int[] minimizedPlay = minimizePlay(currentState, depth+1, otherPlayer);
-            if(minimizedPlay[1] >= ret[1] || ret[0] == -1) {
+            int[] minimizedPlay = minimizePlay(newState, depth+1, otherPlayer);
+
+            if(minimizedPlay[1] > ret[1] || ret[0] == -1) {
                 ret[0] = move[1];
                 ret[1] = minimizedPlay[1];
             }
@@ -50,7 +66,7 @@ public class CPUPlayer {
         int[] ret = new int[]{-1, Integer.MAX_VALUE};
 
         if(depth == MAX_DEPTH) {
-            ret[1] = (int)staticEval(currentState, player);
+            ret[1] = (int)betterStaticEval(currentState, player);
             return ret;
         }
 
@@ -59,9 +75,26 @@ public class CPUPlayer {
 
         for(Integer[] move : Gameboard2.possibleMoves(currentState)) {
             int[][] newState = Gameboard2.deepCopyState(currentState);
-            newState[move[0]][move[1]] = player;
+            int row = move[0];
+            int col = move[1];
+            newState[row][col] = player;
+            if(Gameboard2.checkWin(row, col, newState, player)) {
+                ret[0] = col;
+                ret[1]= -100000;
+                break;
+            }
 
-            int[] maximizedPlay = maximizePlay(currentState, depth+1, otherPlayer);
+            int[] maximizedPlay = maximizePlay(newState, depth+1, otherPlayer);
+
+            /*
+            if(depth == 2) {
+                Log.d("Eval Depth 2", "" + betterStaticEval(newState, player));
+                for(int[] currRow : newState) {
+                    Log.d("State", Arrays.toString(currRow));
+                }
+            }
+            */
+
             if(maximizedPlay[1] < ret[1] || ret[0] == -1) {
                 ret[0] = move[1];
                 ret[1] = maximizedPlay[1];
@@ -69,6 +102,26 @@ public class CPUPlayer {
         }
 
         return ret;
+    }
+
+    public int betterStaticEval(int[][] currentState, int player) {
+        int otherPlayer = (player == MainActivity2.PLAYER_1) ? MainActivity2.PLAYER_2 : MainActivity2.PLAYER_1;
+        int utility = 138;
+        int sum = 0;
+
+        for(int row = 0; row < allUtilities.length; row++) {
+            for(int col = 0; col < allUtilities[row].length; col++) {
+                if(currentState[row][col] == player) {
+                    //If we're trying to maximize, reward higher scores
+                    sum += allUtilities[row][col];
+                } else if(currentState[row][col] == otherPlayer) {
+                    //If we're trying to minimize, penalize higher opponent scores
+                    sum -= allUtilities[row][col];
+                }
+            }
+        }
+
+        return utility + sum;
     }
 
     public double staticEval(int[][] currentState, int player) {
