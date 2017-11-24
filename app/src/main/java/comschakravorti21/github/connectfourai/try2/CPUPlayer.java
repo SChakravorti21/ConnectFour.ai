@@ -13,7 +13,7 @@ import comschakravorti21.github.connectfourai.MainActivity;
 
 public class CPUPlayer {
 
-    private static final int MAX_DEPTH = 7;
+    private static final int MAX_DEPTH = 9;
     private static final int[][] allUtilities = new int[][]{{3, 4, 5, 7, 5, 4, 3},
                                                             {4, 6, 8, 10, 8, 6, 4},
                                                             {5, 8, 11, 13, 11, 8, 5},
@@ -58,6 +58,10 @@ public class CPUPlayer {
                 ret[0] = move[1];
                 ret[1] = minimizedPlay[1];
             }
+
+            alpha = Math.max(alpha, ret[1]);
+            if(beta <= alpha)
+                break;
         }
 
         return ret;
@@ -91,6 +95,10 @@ public class CPUPlayer {
                 ret[0] = move[1];
                 ret[1] = maximizedPlay[1];
             }
+
+            beta = Math.min(beta, ret[1]);
+            if(beta <= alpha)
+                break;
         }
 
         return ret;
