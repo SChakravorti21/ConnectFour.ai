@@ -29,10 +29,11 @@ public class MainActivity2 extends AppCompatActivity {
     private Toolbar toolbar;
     private ProgressBar progressBar;
     private GridLayout gridBoard;
-    private int player;
     private Gameboard2 gameboard;
-    private int scoreP1, scoreP2;
     private CPUPlayer cpu;
+    private int player;
+    private int scoreP1, scoreP2;
+    private boolean generatingMove;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -62,6 +63,7 @@ public class MainActivity2 extends AppCompatActivity {
         //pieces = new int[Gameboard2.ROWS][Gameboard2.COLUMNS];
         player = PLAYER_1;
         scoreP1 = scoreP2 = 0;
+        generatingMove = false;
         cpu = new CPUPlayer();
 
         toolbar = findViewById(R.id.toolbar);
@@ -92,6 +94,8 @@ public class MainActivity2 extends AppCompatActivity {
     private class ButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+            if(generatingMove)
+                return;
 
             ImageButton button = (ImageButton)view;
 
@@ -128,9 +132,9 @@ public class MainActivity2 extends AppCompatActivity {
                 gameboard.clear();
             }
 
+            generatingMove = true;
             MoveGenerator moveGenerator = new MoveGenerator();
             moveGenerator.execute();
-
         }
     }
 
@@ -166,32 +170,35 @@ public class MainActivity2 extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (row != -1) {
-                gameboard.placePiece(row, bestCol, PLAYER_2);
+            if(generatingMove) {
+                if (row != -1) {
+                    gameboard.placePiece(row, bestCol, PLAYER_2);
 
-                if (Gameboard2.checkWin(row, bestCol, gameboard.getBoard(), player)) {
-                    Log.d("Check Win", "TRUE");
-                    if (player == PLAYER_1) {
-                        scoreP1++;
-                        TextView scoreView = (TextView) findViewById(R.id.score_P1);
-                        scoreView.setText("" + scoreP1);
-                    } else {
-                        scoreP2++;
-                        TextView scoreView = (TextView) findViewById(R.id.score_P2);
-                        scoreView.setText("" + scoreP2);
+                    if (Gameboard2.checkWin(row, bestCol, gameboard.getBoard(), player)) {
+                        Log.d("Check Win", "TRUE");
+                        if (player == PLAYER_1) {
+                            scoreP1++;
+                            TextView scoreView = (TextView) findViewById(R.id.score_P1);
+                            scoreView.setText("" + scoreP1);
+                        } else {
+                            scoreP2++;
+                            TextView scoreView = (TextView) findViewById(R.id.score_P2);
+                            scoreView.setText("" + scoreP2);
+                        }
+
+                        gameboard.resetBoard();
                     }
-
-                    gameboard.resetBoard();
                 }
+
+                player = PLAYER_1; //Swap player
+
+                if (gameboard.isFull()) {
+                    gameboard.clear();
+                }
+
+                progressBar.setVisibility(View.GONE);
+                generatingMove = false;
             }
-
-            player = PLAYER_1; //Swap player
-
-            if(gameboard.isFull()) {
-                gameboard.clear();
-            }
-
-            progressBar.setVisibility(View.GONE);
         }
     }
 }
