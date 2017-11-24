@@ -7,6 +7,7 @@ import android.media.Image;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import comschakravorti21.github.connectfourai.R;
@@ -58,6 +59,28 @@ public class Gameboard2 {
         }
 
         return -1;
+    }
+
+    public static ArrayList<Integer[]> possibleMoves(int[][] currentState) {
+        ArrayList<Integer[]> possible = new ArrayList<>(COLUMNS);
+        for(int i = 0; i < COLUMNS; i++) {
+            int row = rowIfPlaced(i, currentState);
+            if(row != -1)
+                possible.add(new Integer[]{row, i});
+        }
+
+        return possible;
+    }
+
+    public static int[][] deepCopyState(int[][] currentState) {
+        if(currentState == null)
+            return null;
+
+        int[][] ret = new int[currentState.length][];
+        for(int i = 0; i < currentState.length; i++) {
+            ret[i] = Arrays.copyOf(currentState[i], currentState[i].length);
+        }
+        return ret;
     }
 
     public void resetBoard() {

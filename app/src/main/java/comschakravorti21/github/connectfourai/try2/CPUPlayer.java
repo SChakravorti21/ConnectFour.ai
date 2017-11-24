@@ -2,6 +2,7 @@ package comschakravorti21.github.connectfourai.try2;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import comschakravorti21.github.connectfourai.MainActivity;
@@ -13,92 +14,61 @@ import comschakravorti21.github.connectfourai.MainActivity;
 public class CPUPlayer {
 
     public static final int MAX_DEPTH = 7;
-    public static final int MAX_SCORE = 1000000;
 
-    public int minimax(int[][] currentState, int player) {
-        int ret = (int)(Math.random()*7);
-        double eval;
-        double highestEval = 0;
+    public int generateMove(int[][] currentState) {
+        int[] bestMove = maximizePlay(currentState, 1, MainActivity2.PLAYER_2);
+        return bestMove[0];
+    }
 
-        for(int i = 0; i < Gameboard2.COLUMNS; i++) {
-            int row = Gameboard2.rowIfPlaced(i, currentState);
-            if(row != -1) {
-                //currentState[row][i] = MainActivity2.PLAYER_2;
-                eval = minimaxRec(currentState, MainActivity2.PLAYER_2, true, 1);
-                Log.d("EVAL", "" + eval);
-                if(eval > highestEval) {
-                    highestEval = eval;
-                    ret = i;
-                }
+    public int[] maximizePlay(int[][] currentState, int depth, int player) {
+        int[] ret = new int[]{-1, Integer.MIN_VALUE};
 
-                currentState[row][i] = 0; //undo the move that was previously done
+        if(depth == MAX_DEPTH) {
+            ret[1] = (int)staticEval(currentState, player);
+            return ret;
+        }
+
+        int otherPlayer = (player == MainActivity2.PLAYER_1) ?
+                MainActivity2.PLAYER_2 : MainActivity2.PLAYER_1;
+
+        for(Integer[] move : Gameboard2.possibleMoves(currentState)) {
+            //Log.d("Move", Arrays.toString(move));
+            int[][] newState = Gameboard2.deepCopyState(currentState);
+            newState[move[0]][move[1]] = player;
+
+            int[] minimizedPlay = minimizePlay(currentState, depth+1, otherPlayer);
+            if(minimizedPlay[1] >= ret[1] || ret[0] == -1) {
+                ret[0] = move[1];
+                ret[1] = minimizedPlay[1];
             }
         }
 
         return ret;
     }
 
-    //Returns the static evaluations from levels 1 through depth (level 0 being root)
-    public double minimaxRec(int[][] currentState, int player, boolean maximizing, int depth) {
+    public int[] minimizePlay(int[][] currentState, int depth, int player) {
+        int[] ret = new int[]{-1, Integer.MAX_VALUE};
+
         if(depth == MAX_DEPTH) {
-            return staticEval(currentState, player);
+            ret[1] = (int)staticEval(currentState, player);
+            return ret;
         }
 
-        double bestResult = 0;
-        double eval = 0;
-        int newPlayer = (player == MainActivity2.PLAYER_1) ?
-                MainActivity2.PLAYER_2 : MainActivity2.PLAYER_1; //The player on next round
+        int otherPlayer = (player == MainActivity2.PLAYER_1) ?
+                MainActivity2.PLAYER_2 : MainActivity2.PLAYER_1;
 
-        if(maximizing) {
-            //int highestEvalCol = (int)Math.random()*7; //pick random column as default
-            double highestEval = Integer.MIN_VALUE;
+        for(Integer[] move : Gameboard2.possibleMoves(currentState)) {
+            int[][] newState = Gameboard2.deepCopyState(currentState);
+            newState[move[0]][move[1]] = player;
 
-            for(int i = 0; i < Gameboard2.COLUMNS; i++) {
-                int row = Gameboard2.rowIfPlaced(i, currentState);
-                if(row != -1) {
-                    currentState[row][i] = player;
-                    eval = minimaxRec(currentState, newPlayer, !maximizing, depth+1);
-                    if(depth == 1) {
-                        Log.d("EVAL depth 1", "" + eval);
-                        Log.d("Current state", Arrays.deepToString(currentState));
-                    }
-
-                    if(eval > highestEval) {
-                        highestEval = eval;
-                    }
-
-                    currentState[row][i] = 0; //undo the move that was previously done
-                }
+            int[] maximizedPlay = maximizePlay(currentState, depth+1, otherPlayer);
+            if(maximizedPlay[1] < ret[1] || ret[0] == -1) {
+                ret[0] = move[1];
+                ret[1] = maximizedPlay[1];
             }
-
-            bestResult = highestEval;
-        } else {
-            //int highestEvalCol = (int)Math.random()*7; //pick random column as default
-            double lowestEval = Integer.MAX_VALUE;
-
-            for(int i = 0; i < Gameboard2.COLUMNS; i++) {
-                int row = Gameboard2.rowIfPlaced(i, currentState);
-                if(row != -1) {
-                    currentState[row][i] = player;
-                    eval = minimaxRec(currentState, newPlayer, !maximizing, depth+1);
-
-//                    if(depth == 2) {
-//                        Log.d("EVAL depth 2", "" + eval);
-//                        Log.d("Current state", Arrays.deepToString(currentState));
-//                    }
-
-                    if(eval < lowestEval) {
-                        lowestEval = eval;
-                    }
-
-                    currentState[row][i] = 0; //undo the move that was previously done
-                }
-            }
-
-            bestResult = lowestEval;
         }
 
-        return bestResult;
+        return ret;
     }
 
     public double staticEval(int[][] currentState, int player) {
@@ -108,7 +78,6 @@ public class CPUPlayer {
         //If we are evaluating for human player (PLAYER_1), then we'll
         //multiply the eval by -1 (minimizing human player score), otherwise
         //leave score unaltered
-        int multiplier = (player == MainActivity2.PLAYER_1) ? 1 : 1; //-1 : 1
         double ret = 0;
         int maxInRow = 0;
 
@@ -117,16 +86,13 @@ public class CPUPlayer {
             If there are 4 in a row, return 1000 (game over)
          */
 
+        int multiplier = (player == MainActivity2.PLAYER_1) ? 1 : 1; //-1 : 1
+
         //Check each row individually for # of consecutive pieces
         int deltaX = 1;
         int deltaY = 1;
-        for(int row = 0; row < Gameboard2.ROWS; row += deltaY, maxInRow = 0) {
-            for(int col = 0; col < Gameboard2.COLUMNS; col += deltaX) {
-
-                //If there is a win, there is no point in checking anymore
-                if (Gameboard2.checkWin(row, col, currentState, player)) {
-                    return (multiplier * MAX_SCORE);
-                }
+        for (int row = 0; row < Gameboard2.ROWS; row += deltaY, maxInRow = 0) {
+            for (int col = 0; col < Gameboard2.COLUMNS; col += deltaX) {
 
                 //If we find a piece belonging to player, increment maxInRow
                 if (currentState[row][col] == player) {
@@ -134,8 +100,9 @@ public class CPUPlayer {
                 }
                 //If we don;t find a piece, then calculate the associated value
                 //with the running max (not including single pieces)
-                else if(maxInRow > 1){
-                    ret += Math.pow(10, maxInRow);
+                else if (maxInRow > 1) {
+                    maxInRow += (maxInRow == 4) ? 2 : 0;
+                    ret += Math.pow(10, maxInRow) * multiplier;
                     maxInRow = 0;
                 } else {
                     maxInRow = 0;
@@ -144,32 +111,31 @@ public class CPUPlayer {
 
             //It is possible that traversing through the column to the bottom never results
             //in a '0' position, so be sure to add remainder
-            if(maxInRow != 0){
-                ret += Math.pow(10, maxInRow);
+            if (maxInRow != 0) {
+                maxInRow += (maxInRow == 4) ? 2 : 0;
+                ret += Math.pow(10, maxInRow) * multiplier;
             }
         }
         maxInRow = 0; //Reset max in row for next iteration set
 
         //Check each column individually for # of consecutive pieces
-        for(int col = 0; col < Gameboard2.COLUMNS; col += deltaX, maxInRow = 0) {
-            for(int row = 0; row < Gameboard2.ROWS; row += deltaY) {
-
-                if (Gameboard2.checkWin(row, col, currentState, player)) {
-                    return (multiplier * MAX_SCORE);
-                }
+        for (int col = 0; col < Gameboard2.COLUMNS; col += deltaX, maxInRow = 0) {
+            for (int row = 0; row < Gameboard2.ROWS; row += deltaY) {
 
                 if (currentState[row][col] == player) {
                     maxInRow++;
-                } else if(maxInRow > 1){
-                    ret += Math.pow(10, maxInRow);
+                } else if (maxInRow > 1) {
+                    maxInRow += (maxInRow == 4) ? 2 : 0;
+                    ret += Math.pow(10, maxInRow) * multiplier;
                     maxInRow = 0;
                 } else {
                     maxInRow = 0;
                 }
             }
 
-            if(maxInRow != 0){
-                ret += Math.pow(10, maxInRow);
+            if (maxInRow != 0) {
+                maxInRow += (maxInRow == 4) ? 2 : 0;
+                ret += Math.pow(10, maxInRow) * multiplier;
             }
         }
         maxInRow = 0;
@@ -177,55 +143,52 @@ public class CPUPlayer {
         //Checking diagonally (top-left t0 bottom-right direction scenarios)
         int[] startingRows = new int[]{2, 1, 0, 0, 0, 0};
         int[] startingCols = new int[]{0, 0, 0, 1, 2, 3};
-        for(int i = 0; i < startingRows.length && i < startingCols.length; i++) {
-            for(int row = startingRows[i], col = startingCols[i]; row < Gameboard2.ROWS && col < Gameboard2.COLUMNS;
-                row += deltaY, col += deltaX) {
-
-                if (Gameboard2.checkWin(row, col, currentState, player)) {
-                    return (multiplier * MAX_SCORE);
-                }
+        for (int i = 0; i < startingRows.length && i < startingCols.length; i++) {
+            for (int row = startingRows[i], col = startingCols[i]; row < Gameboard2.ROWS && col < Gameboard2.COLUMNS;
+                 row += deltaY, col += deltaX) {
 
                 if (currentState[row][col] == player) {
                     maxInRow++;
-                } else if(maxInRow > 1){
-                    ret += Math.pow(10, maxInRow);
+                } else if (maxInRow > 1) {
+                    maxInRow += (maxInRow == 4) ? 2 : 0;
+                    ret += Math.pow(10, maxInRow) * multiplier;
                     maxInRow = 0;
                 } else {
                     maxInRow = 0;
                 }
             }
 
-            if(maxInRow != 0){
-                ret += Math.pow(10, maxInRow);
+            if (maxInRow != 0) {
+                maxInRow += (maxInRow == 4) ? 2 : 0;
+                ret += Math.pow(10, maxInRow) * multiplier;
             }
         }
 
         //Checking diagonally (top-right t0 bottom-left direction scenarios)
         deltaY = -1;
         startingRows = new int[]{3, 4, 5, 5, 5, 5};
-        for(int i = 0; i < startingRows.length && i < startingCols.length; i++) {
-            for(int row = startingRows[i], col = startingCols[i]; row >= 0 && col < Gameboard2.COLUMNS;
-                row += deltaY, col += deltaX) {
-
-                if (Gameboard2.checkWin(row, col, currentState, player)) {
-                    return (multiplier * MAX_SCORE);
-                }
+        for (int i = 0; i < startingRows.length && i < startingCols.length; i++) {
+            for (int row = startingRows[i], col = startingCols[i]; row >= 0 && col < Gameboard2.COLUMNS;
+                 row += deltaY, col += deltaX) {
 
                 if (currentState[row][col] == player) {
                     maxInRow++;
-                } else if(maxInRow > 1){
-                    ret += Math.pow(10, maxInRow);
+                } else if (maxInRow > 1) {
+                    maxInRow += (maxInRow == 4) ? 2 : 0;
+                    ret += Math.pow(10, maxInRow) * multiplier;
                     maxInRow = 0;
                 } else {
                     maxInRow = 0;
                 }
             }
 
-            if(maxInRow != 0){
-                ret += Math.pow(10, maxInRow);
+            if (maxInRow != 0) {
+                maxInRow += (maxInRow == 4) ? 2 : 0;
+                ret += Math.pow(10, maxInRow) * multiplier;
             }
         }
-        return ret*multiplier;
 
+
+        return ret;
     }
 }

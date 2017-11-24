@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.lang.reflect.GenericArrayType;
+import java.util.Arrays;
 import java.util.concurrent.Executor;
 
 import comschakravorti21.github.connectfourai.R;
@@ -23,7 +24,6 @@ public class MainActivity2 extends AppCompatActivity {
 
     public static final int PLAYER_1 = 1;
     public static final int PLAYER_2 = 2;
-    public static final int CPU = 3;
 
     private Toolbar toolbar;
     private ProgressBar progressBar;
@@ -133,7 +133,11 @@ public class MainActivity2 extends AppCompatActivity {
 
             //Set the progress bar to be visible to prevent it from  looking like UI freeze
             progressBar.setVisibility(View.VISIBLE);
-            int bestCol = cpu.minimax(gameboard.getBoard(), player); //get the best move for CPU
+            for(Integer[] move : Gameboard2.possibleMoves(gameboard.getBoard())) {
+                Log.d("Move", Arrays.toString(move));
+            }
+
+            int bestCol = cpu.generateMove(gameboard.getBoard()); //get the best move for CPU
             progressBar.setVisibility(View.GONE);
             row = Gameboard2.rowIfPlaced(bestCol, gameboard.getBoard());
 
