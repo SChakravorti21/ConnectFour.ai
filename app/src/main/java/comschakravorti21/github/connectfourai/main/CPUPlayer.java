@@ -1,4 +1,4 @@
-package comschakravorti21.github.connectfourai.try2;
+package comschakravorti21.github.connectfourai.main;
 
 /**
  * Created by Development on 11/23/17.
@@ -30,7 +30,7 @@ public class CPUPlayer {
      */
     public int generateMove(int[][] currentState) {
         //Start by calling maximizePlay since we want to maximize CPU's score
-        int[] bestMove = maximizePlay(currentState, 1, MainActivity2.PLAYER_2,
+        int[] bestMove = maximizePlay(currentState, 1, MainActivity.PLAYER_2,
                 Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         //maximizePlay returns a 1D int array as [column of best move, static eval]
@@ -60,13 +60,13 @@ public class CPUPlayer {
         }
 
         //The player who will play in the next round
-        int otherPlayer = (player == MainActivity2.PLAYER_1) ?
-                MainActivity2.PLAYER_2 : MainActivity2.PLAYER_1;
+        int otherPlayer = (player == MainActivity.PLAYER_1) ?
+                MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
 
         //Get all possible moves and start iterating to find best move
-        for(Integer[] move : Gameboard2.possibleMoves(currentState)) {
+        for(Integer[] move : GameBoard.possibleMoves(currentState)) {
             //get a deep copy of the board to prevent modifications to original calling board
-            int[][] newState = Gameboard2.deepCopyState(currentState);
+            int[][] newState = GameBoard.deepCopyState(currentState);
             int row = move[0];
             int col = move[1];
             newState[row][col] = player;
@@ -74,7 +74,7 @@ public class CPUPlayer {
             //If the player wins, there is no point in checking further
             //Returns a massive static eval so that the calling minimizePlay node knows
             //not to pick this move
-            if(Gameboard2.checkWin(row, col, newState, player)) {
+            if(GameBoard.checkWin(row, col, newState, player)) {
                 ret[0] = col;
                 ret[1]= 1000000;
                 break;
@@ -119,18 +119,18 @@ public class CPUPlayer {
             return ret;
         }
 
-        int otherPlayer = (player == MainActivity2.PLAYER_1) ?
-                MainActivity2.PLAYER_2 : MainActivity2.PLAYER_1;
+        int otherPlayer = (player == MainActivity.PLAYER_1) ?
+                MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
 
-        for(Integer[] move : Gameboard2.possibleMoves(currentState)) {
-            int[][] newState = Gameboard2.deepCopyState(currentState);
+        for(Integer[] move : GameBoard.possibleMoves(currentState)) {
+            int[][] newState = GameBoard.deepCopyState(currentState);
             int row = move[0];
             int col = move[1];
             newState[row][col] = player;
 
             //Return a large negative number so that calling maximizePlay node knows
             //not to go down this path.
-            if(Gameboard2.checkWin(row, col, newState, player)) {
+            if(GameBoard.checkWin(row, col, newState, player)) {
                 ret[0] = col;
                 ret[1]= -1000000;
                 break;
@@ -163,7 +163,7 @@ public class CPUPlayer {
      * @return the static evaluation
      */
     public int utilityStaticEval(int[][] currentState, int player) {
-        int otherPlayer = (player == MainActivity2.PLAYER_1) ? MainActivity2.PLAYER_2 : MainActivity2.PLAYER_1;
+        int otherPlayer = (player == MainActivity.PLAYER_1) ? MainActivity.PLAYER_2 : MainActivity.PLAYER_1;
         int utility = 138;
         int sum = 0;
 
@@ -207,13 +207,13 @@ public class CPUPlayer {
             If there are 4 in a row, return 1000 (game over)
          */
 
-        int multiplier = (player == MainActivity2.PLAYER_1) ? 1 : 1; //-1 : 1
+        int multiplier = (player == MainActivity.PLAYER_1) ? 1 : 1; //-1 : 1
 
         //Check each row individually for # of consecutive pieces
         int deltaX = 1;
         int deltaY = 1;
-        for (int row = 0; row < Gameboard2.ROWS; row += deltaY, maxInRow = 0) {
-            for (int col = 0; col < Gameboard2.COLUMNS; col += deltaX) {
+        for (int row = 0; row < GameBoard.ROWS; row += deltaY, maxInRow = 0) {
+            for (int col = 0; col < GameBoard.COLUMNS; col += deltaX) {
 
                 //If we find a piece belonging to player, increment maxInRow
                 if (currentState[row][col] == player) {
@@ -240,8 +240,8 @@ public class CPUPlayer {
         maxInRow = 0; //Reset max in row for next iteration set
 
         //Check each column individually for # of consecutive pieces
-        for (int col = 0; col < Gameboard2.COLUMNS; col += deltaX, maxInRow = 0) {
-            for (int row = 0; row < Gameboard2.ROWS; row += deltaY) {
+        for (int col = 0; col < GameBoard.COLUMNS; col += deltaX, maxInRow = 0) {
+            for (int row = 0; row < GameBoard.ROWS; row += deltaY) {
 
                 if (currentState[row][col] == player) {
                     maxInRow++;
@@ -265,7 +265,7 @@ public class CPUPlayer {
         int[] startingRows = new int[]{2, 1, 0, 0, 0, 0};
         int[] startingCols = new int[]{0, 0, 0, 1, 2, 3};
         for (int i = 0; i < startingRows.length && i < startingCols.length; i++) {
-            for (int row = startingRows[i], col = startingCols[i]; row < Gameboard2.ROWS && col < Gameboard2.COLUMNS;
+            for (int row = startingRows[i], col = startingCols[i]; row < GameBoard.ROWS && col < GameBoard.COLUMNS;
                  row += deltaY, col += deltaX) {
 
                 if (currentState[row][col] == player) {
@@ -289,7 +289,7 @@ public class CPUPlayer {
         deltaY = -1;
         startingRows = new int[]{3, 4, 5, 5, 5, 5};
         for (int i = 0; i < startingRows.length && i < startingCols.length; i++) {
-            for (int row = startingRows[i], col = startingCols[i]; row >= 0 && col < Gameboard2.COLUMNS;
+            for (int row = startingRows[i], col = startingCols[i]; row >= 0 && col < GameBoard.COLUMNS;
                  row += deltaY, col += deltaX) {
 
                 if (currentState[row][col] == player) {

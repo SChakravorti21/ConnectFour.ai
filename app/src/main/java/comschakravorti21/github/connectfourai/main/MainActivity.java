@@ -1,4 +1,4 @@
-package comschakravorti21.github.connectfourai.try2;
+package comschakravorti21.github.connectfourai.main;
 
 /**
  * Created by Shoumyo Chakravorti on 11/21/17.
@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 import comschakravorti21.github.connectfourai.R;
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     /**
      * Player 1's corresponding player number in game states
@@ -35,7 +35,7 @@ public class MainActivity2 extends AppCompatActivity {
     private Toolbar toolbar;
     private ProgressBar progressBar;
     private GridLayout gridBoard;
-    private Gameboard2 gameboard;
+    private GameBoard gameboard;
     private CPUPlayer cpu;
     private int player;
     private int scoreP1, scoreP2;
@@ -82,7 +82,7 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         gridBoard = findViewById(R.id.board);
         player = PLAYER_1;
         scoreP1 = scoreP2 = 0;
@@ -96,7 +96,7 @@ public class MainActivity2 extends AppCompatActivity {
         progressBar = findViewById(R.id.progress);
         progressBar.setVisibility(View.GONE);
 
-        gameboard = new Gameboard2();
+        gameboard = new GameBoard();
 
         //No need to redefine the OnClickListener for every button, so we can just use the
         //same one
@@ -142,12 +142,12 @@ public class MainActivity2 extends AppCompatActivity {
             int col = Character.digit( ((String)button.getTag()).charAt(1), 10) - 1;
 
             //If this column can be played in, get the respective row to play in
-            int row = Gameboard2.rowIfPlaced(col, gameboard.getBoard());
+            int row = GameBoard.rowIfPlaced(col, gameboard.getBoard());
             if(row != -1) {
                 gameboard.placePiece(row, col, player);
 
                 //Check for a win
-                if(Gameboard2.checkWin(row, col, gameboard.getBoard(), player)) {
+                if(GameBoard.checkWin(row, col, gameboard.getBoard(), player)) {
                     if(player == PLAYER_1) {
                         scoreP1++;
                         TextView scoreView = (TextView)findViewById(R.id.score_P1);
@@ -220,7 +220,7 @@ public class MainActivity2 extends AppCompatActivity {
 
             Log.d("Calculation time", "" + (System.nanoTime() - start)/1000000 + " milliseconds");
 
-            row = Gameboard2.rowIfPlaced(bestCol, gameboard.getBoard());
+            row = GameBoard.rowIfPlaced(bestCol, gameboard.getBoard());
 
             return null;
         }
@@ -241,7 +241,7 @@ public class MainActivity2 extends AppCompatActivity {
                 if (row != -1) {
                     gameboard.placePiece(row, bestCol, PLAYER_2);
 
-                    if (Gameboard2.checkWin(row, bestCol, gameboard.getBoard(), player)) {
+                    if (GameBoard.checkWin(row, bestCol, gameboard.getBoard(), player)) {
                         Log.d("Check Win", "TRUE");
                         for(int[] row : gameboard.getBoard()) {
                             Log.d("Rows ", Arrays.toString(row));

@@ -1,4 +1,4 @@
-package comschakravorti21.github.connectfourai.try2;
+package comschakravorti21.github.connectfourai.main;
 
 /**
  * Created by Shoumyo Chakravorti on 11/21/17.
@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 import comschakravorti21.github.connectfourai.R;
 
-public class Gameboard2 {
+public class GameBoard {
 
     /**
      * The standard number of rows in a Connect Four board (6)
@@ -25,10 +25,10 @@ public class Gameboard2 {
     private ImageButton[][] buttons;
 
     /**
-     * Creates a new Gameboard with an empty state and sets all
+     * Creates a new GameBoard with an empty state and sets all
      * pieces to white (empty).
      */
-    public Gameboard2() {
+    public GameBoard() {
         gameState = new int[ROWS][COLUMNS];
         buttons = new ImageButton[ROWS][COLUMNS];
     }
@@ -44,7 +44,7 @@ public class Gameboard2 {
     public int placePiece(int row, int col, int playerNum) {
         gameState[row][col] = playerNum;
 
-        if(playerNum == MainActivity2.PLAYER_1) {
+        if(playerNum == MainActivity.PLAYER_1) {
             this.changePieceColor(row, col, R.mipmap.piece_yellow);
         } else {
             this.changePieceColor(row, col, R.mipmap.piece_red);
