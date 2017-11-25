@@ -1,7 +1,6 @@
 package comschakravorti21.github.connectfourai.try2;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,10 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.concurrent.Executor;
 
 import comschakravorti21.github.connectfourai.R;
 
@@ -85,7 +81,7 @@ public class MainActivity2 extends AppCompatActivity {
             String tag = (String)button.getTag();
             int row = Character.digit(tag.charAt(0), 10);
             int col = Character.digit(tag.charAt(1), 10);
-            gameboard.setButtonImg(row-1, col-1, button);
+            gameboard.setButton(row-1, col-1, button);
         }
 
     }
