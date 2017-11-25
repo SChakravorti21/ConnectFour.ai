@@ -129,7 +129,7 @@ public class MainActivity2 extends AppCompatActivity {
 
             //If the board fills up, clear it
             if(gameboard.isFull()) {
-                gameboard.clear();
+                gameboard.resetBoard();
             }
 
             generatingMove = true;
@@ -170,12 +170,17 @@ public class MainActivity2 extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            Log.d("Post execute", "Running now");
             if(generatingMove) {
                 if (row != -1) {
                     gameboard.placePiece(row, bestCol, PLAYER_2);
 
                     if (Gameboard2.checkWin(row, bestCol, gameboard.getBoard(), player)) {
                         Log.d("Check Win", "TRUE");
+                        for(int[] row : gameboard.getBoard()) {
+                            Log.d("Rows ", Arrays.toString(row));
+                        }
+
                         if (player == PLAYER_1) {
                             scoreP1++;
                             TextView scoreView = (TextView) findViewById(R.id.score_P1);
@@ -190,10 +195,12 @@ public class MainActivity2 extends AppCompatActivity {
                     }
                 }
 
+                row = -1;
+                bestCol = -1;
                 player = PLAYER_1; //Swap player
 
                 if (gameboard.isFull()) {
-                    gameboard.clear();
+                    gameboard.resetBoard();
                 }
 
                 progressBar.setVisibility(View.GONE);
