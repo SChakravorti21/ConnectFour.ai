@@ -75,7 +75,7 @@ public class CPU_Player {
             } else {
                 //At last layer
                 lastLayer.add(n);
-                //n.setStaticValue(GameBoard.staticEval(node.getGameState(), GameBoard.PLAYER2_BIT));
+                //n.setStaticValue(GameBoard.strongStaticEval(node.getGameState(), GameBoard.PLAYER2_BIT));
             }
         }
 

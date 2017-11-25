@@ -36,7 +36,7 @@ public class MiniMaxNode {
 
         this.staticValue = staticValue;
         this.staticValue = GameBoard.staticEval(gameState, r, c, staticValue, currentPlayerNum);
-        //this.staticValue = GameBoard.staticEval(gameState, r, c, (short)0, currentPlayerNum);
+        //this.staticValue = GameBoard.strongStaticEval(gameState, r, c, (short)0, currentPlayerNum);
 
         children = null;
     }
