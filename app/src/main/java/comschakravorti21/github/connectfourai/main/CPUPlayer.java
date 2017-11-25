@@ -219,7 +219,7 @@ public class CPUPlayer {
                 if (currentState[row][col] == player) {
                     maxInRow++;
                 }
-                //If we don;t find a piece, then calculate the associated value
+                //If we don't find a piece, then calculate the associated value
                 //with the running max (not including single pieces)
                 else if (maxInRow > 1) {
                     maxInRow += (maxInRow == 4) ? 2 : 0;
