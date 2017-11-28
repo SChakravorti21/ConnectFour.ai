@@ -3,6 +3,8 @@ package comschakravorti21.github.connectfourai.main;
 /**
  * Created by Shoumyo Chakravorti on 11/21/17.
  */
+import android.content.ContentValues;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private int player;
     private int scoreP1, scoreP2;
     private boolean generatingMove;
+    public MediaPlayer songPlayer;
 
     /**
      * Overrides AppCompatActivity's onOptionsItemsSelected method.
@@ -62,6 +65,26 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        songPlayer.start();
+    }
+
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        songPlayer.pause();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        songPlayer.stop();
+        ContentValues values = new ContentValues();
+        values.put("h", String.valueOf(this.gameboard));
+    }
     /**
      * Overrides AppCompatActivity's onCreateOptionsMenu method.
      * Inflates the toolbar menu
@@ -102,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         //same one
         View.OnClickListener buttonClickListener = new ButtonClickListener();
 
+        songPlayer = MediaPlayer.create(this, R.raw.connect4);
+        songPlayer.start();
 
         //Get all ImageButtons, set their image resources to empty cell images, attach
         //listeners, and use the button tag to add the button to the gameboard object
