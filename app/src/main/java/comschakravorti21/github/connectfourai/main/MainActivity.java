@@ -58,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 gameboard.resetBoard();
                 TextView scoreView1 = findViewById(R.id.score_P1);
                 scoreView1.setText("0");
+                scoreP1 = 0;
                 TextView scoreView2 = findViewById(R.id.score_P2);
                 scoreView2.setText("0");
+                scoreP2 = 0;
         }
 
         return super.onOptionsItemSelected(item);
@@ -247,6 +249,51 @@ public class MainActivity extends AppCompatActivity {
 
             row = GameBoard.rowIfPlaced(bestCol, gameboard.getBoard());
 
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //Only allow CPU to play a move after a move is generated
+                    //This check was included because onPostExecute seems to update the
+                    //UI multiple times sometimes.
+                    if(generatingMove) {
+                        //Same functionality as when the user plays a piece
+                        if (row != -1) {
+                            gameboard.placePiece(row, bestCol, PLAYER_2);
+
+                            if (GameBoard.checkWin(row, bestCol, gameboard.getBoard(), player)) {
+                                Log.d("Check Win", "TRUE");
+                                for(int[] row : gameboard.getBoard()) {
+                                    Log.d("Rows ", Arrays.toString(row));
+                                }
+
+                                if (player == PLAYER_1) {
+                                    scoreP1++;
+                                    TextView scoreView = (TextView) findViewById(R.id.score_P1);
+                                    scoreView.setText("" + scoreP1);
+                                } else {
+                                    scoreP2++;
+                                    TextView scoreView = (TextView) findViewById(R.id.score_P2);
+                                    scoreView.setText("" + scoreP2);
+                                }
+
+                                gameboard.resetBoard();
+                            }
+                        }
+
+                        row = -1;
+                        bestCol = -1;
+                        player = PLAYER_1; //Swap player
+
+                        if (gameboard.isFull()) {
+                            gameboard.resetBoard();
+                        }
+
+                        //Move generation is complete, allow user to make a move
+                        generatingMove = false;
+                    }
+                }
+            });
+
             return null;
         }
 
@@ -257,47 +304,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-            //Only allow CPU to play a move after a move is generated
-            //This check was included because onPostExecute seems to update the
-            //UI multiple times sometimes.
-            if(generatingMove) {
-                //Same functionality as when the user plays a piece
-                if (row != -1) {
-                    gameboard.placePiece(row, bestCol, PLAYER_2);
-
-                    if (GameBoard.checkWin(row, bestCol, gameboard.getBoard(), player)) {
-                        Log.d("Check Win", "TRUE");
-                        for(int[] row : gameboard.getBoard()) {
-                            Log.d("Rows ", Arrays.toString(row));
-                        }
-
-                        if (player == PLAYER_1) {
-                            scoreP1++;
-                            TextView scoreView = (TextView) findViewById(R.id.score_P1);
-                            scoreView.setText("" + scoreP1);
-                        } else {
-                            scoreP2++;
-                            TextView scoreView = (TextView) findViewById(R.id.score_P2);
-                            scoreView.setText("" + scoreP2);
-                        }
-
-                        gameboard.resetBoard();
-                    }
-                }
-
-                row = -1;
-                bestCol = -1;
-                player = PLAYER_1; //Swap player
-
-                if (gameboard.isFull()) {
-                    gameboard.resetBoard();
-                }
-
-                //Move generation is complete, allow user to make a move
-                progressBar.setVisibility(View.GONE);
-                generatingMove = false;
-            }
+            progressBar.setVisibility(View.GONE);
         }
     }
 }
